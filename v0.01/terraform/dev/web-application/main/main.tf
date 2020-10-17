@@ -17,7 +17,7 @@ terraform {
     #region         = "us-west-2"
     #dynamodb_table = "terraform-state"
     #encrypt        =  true
-    organization    = "oliver-dev-0"
+    organization    = "oliver-dev"
 
   workspaces {
     name = "aws-demo-dev"
