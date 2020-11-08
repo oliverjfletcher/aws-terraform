@@ -2,7 +2,7 @@
  * AWS Terraform Demo
  */
 ######################################################################
-# Define Route Tables for Subnets to NAT and IGW
+# Define Route Tables for Subnets to NAT GW and IGW
 ######################################################################
 resource "aws_route_table" "internet_gateway_rt_0" {
   vpc_id = var.vpc_id

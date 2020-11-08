@@ -39,17 +39,23 @@ iam_policy_name_001 = "terraform-replication-policy"
 ##########################################################################################
 kms_deletion_window_in_days = "14"
 kms_enable_key_rotation  = "true"
-kms_description = "terraform state s3 bucket kms key"
+kms_description_tf = "terraform state s3 bucket kms key"
+kms_description_ct = "terraform state cloudtrail kms key"
 sse_algorithm = "aws:kms"
 ##########################################################################################
 # Define values for variables to be used for KMS keys
 ##########################################################################################
-cloudtrail_name = "master-cloudtrail"
+cloudtrail_name = "master-trail"
 s3_cloudtrail_prefix = "cloudtrail"
 include_global_service_event = "true"
 enable_log_file_validation = "true"
 enable_logging = "true"
 is_multi_region_trail = "true"
+is_organization_trail = "true"
+read_write_type = "All"
+include_management_events = "true"
+data_resource_type = "AWS::S3::Object"
+data_resource_values = "arn:aws:s3:::"
 ##########################################################################################
 # Define values for variables to be used for DynamoDB Table
 ##########################################################################################

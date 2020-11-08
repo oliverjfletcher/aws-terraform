@@ -19,7 +19,12 @@ variable "standard_tags" {
   type        = map
 }
 
-variable "kms_description" {
+variable "kms_description_ct" {
+  description = "KMS key description"
+  type        = string
+}
+
+variable "kms_description_tf" {
   description = "KMS key description"
   type        = string
 }
