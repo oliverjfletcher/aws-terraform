@@ -101,8 +101,8 @@ As Terraform will require access to the AWS Organization, a [IAM User](https://c
 
 |**Service Account Name** |**Service**          |**Environment**        |
 |-------------------------|---------------------|-----------------------|
+|terraform                |Terraform Foundation |Development            |
 |terraform                |Web Application      |Development            |
-
 <br>
 
 ### terraform-taxonomy
