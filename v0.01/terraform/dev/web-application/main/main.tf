@@ -11,13 +11,21 @@ provider "aws" {
 # Define Terraform
 ######################################################################
 terraform {
-  backend "s3" {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
+ }  
+  backend "remote" {
     #bucket         = "useds3b000"
     #key            = "global/s3/terraform.tfstate"
     #region         = "us-west-2"
     #dynamodb_table = "terraform-state"
     #encrypt        =  true
-    organization    = "oliver-dev-0"
+    organization    = "oliver-dev"
 
   workspaces {
     name = "aws-demo-dev"
