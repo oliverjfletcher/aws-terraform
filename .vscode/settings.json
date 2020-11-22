@@ -2,7 +2,12 @@
     "cSpell.words": [
         "dev",
         "file",
+        "hashicorp",
+        "hashicorp setup terraform v",
+        "setup",
+        "terraform",
         "tfvars",
+        "v",
         "var",
         "var file dev tfvars"
     ]
