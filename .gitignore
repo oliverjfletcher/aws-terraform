@@ -5,3 +5,5 @@ v0.01/terraform/dev/web-application/main/.terraform/plugins/registry.terraform.i
 v0.01/terraform/dev/web-application/main/.terraform/plugins/selections.json
 v0.01/terraform/dev/web-application/main/.terraform/modules/modules.json
 v0.01/terraform/dev/web-application/main/.terraform/terraform.tfstate
+.github/workflows/pr.yml
+.github/workflows/main.yml

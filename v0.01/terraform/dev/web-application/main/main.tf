@@ -12,24 +12,21 @@ provider "aws" {
 ######################################################################
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/aws"
+      aws = {
+        source = "hashicorp/aws"
     }
-    random = {
-      source = "hashicorp/random"
-    }
- }  
-  backend "remote" {
-    #bucket         = "useds3b000"
-    #key            = "global/s3/terraform.tfstate"
-    #region         = "us-west-2"
-    #dynamodb_table = "terraform-state"
-    #encrypt        =  true
-    organization    = "oliver-dev"
+  }  
+  backend "s3" {
+    bucket         = "useds3b000"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-state"
+    encrypt        =  true
+    #organization    = "oliver-dev"
 
-  workspaces {
-    name = "aws-demo-dev"
-   }
+  #workspaces {
+    #name = "aws-demo-dev"
+   #}
  }
 }
 ######################################################################

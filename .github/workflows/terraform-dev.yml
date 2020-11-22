@@ -3,7 +3,7 @@ name: "Terraform"
 on:
   push:
     branches:
-      - v0.01
+      - v0.02
   pull_request:
 
 jobs:
@@ -24,13 +24,21 @@ jobs:
         id: fmt
         run: terraform fmt -check
         env:
-          TF_ACTION_WORKING_DIR: "./terraform/dev/web-application/main/"
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        with:
+          TF_ACTION_WORKING_DIR: "./v0.01/terraform/dev/web-application/main/"
 
       - name: Terraform Init
         id: init
         run: terraform init
         env:
-          TF_ACTION_WORKING_DIR: "./terraform/dev/web-application/main/"
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_ACTION_WORKSPACE: = "aws-demo-dev"
+        with:
+          TF_ACTION_WORKING_DIR: "./v0.01/terraform/dev/web-application/main/"
+          TF_ARGS: '-var-file="dev.tfvars"'
 
       - name: Terraform Plan
         id: plan
@@ -41,11 +49,13 @@ jobs:
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'
         env:
-          TF_CLI_ARGS: '-var-file="dev.tfvars"'
-          TF_ACTION_WORKING_DIR: "./terraform/dev/web-application/main/"
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_ACTION_WORKSPACE: = "aws-demo-dev"
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          TF_ACTION_WORKING_DIR: "./v0.01/terraform/dev/web-application/main/"
+          TF_ARGS: '-var-file="dev.tfvars"'
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
@@ -74,6 +84,10 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve
-        env: 
-          TF_CLI_ARGS: '-var-file="dev.tfvars"'
-          TF_ACTION_WORKING_DIR: "./terraform/dev/web-application/main/"
+        env:
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_ACTION_WORKSPACE: = "aws-demo-dev"
+        with:
+          TF_ACTION_WORKING_DIR: "./v0.01/terraform/dev/web-application/main/"
+          TF_ARGS: '-var-file="dev.tfvars"'
