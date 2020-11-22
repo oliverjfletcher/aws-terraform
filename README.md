@@ -148,12 +148,12 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 **Table 2.** *Terraform Cloud Workspace Variables*
 
-|**Key**          |**Value**    |**Sensitive**     |**Workspace**     |
-|-----------------|------------ |------------------|------------------|            
-|AWS_ACCESS_KEY_ID|TBD          |Yes               |aws-demo-dev      |
-|AWS_SECRET_ACCESS_KEY| TBD     |Yes               |aws-demo-dev      |
-|AWS_ACCESS_KEY_ID|TBD          |Yes               |aws-demo-prod     |
-|AWS_SECRET_ACCESS_KEY| TBD     |Yes               |aws-demo-prod     |
+|**Key**          |**Workspace**     |
+|-----------------|------------------|            
+|AWS_ACCESS_KEY_ID|aws-demo-dev      |
+|AWS_SECRET_ACCESS_KEY|aws-demo-dev      |
+|AWS_ACCESS_KEY_ID|aws-demo-prod     |
+|AWS_SECRET_ACCESS_KEY|aws-demo-prod     |
 
 <br>
 
