@@ -164,7 +164,7 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 |**Bucket Name**  |**Service**     |**Environment** |**URL**           |**Region**        |
 |-----------------|----------------|----------------|------------------|------------------|           
 |useds3b000       |Web Application |Dev             |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)| us-west-1 
-|useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/useds3b001)| us-west-2
+|useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/s3/buckets/useds3b001)| us-west-2
 
 
 
