@@ -24,7 +24,7 @@ Detailed designs of each of the services can be found in their respective soluti
 
 ```
 git clone https://github.com/oliverjfletcher/aws-terraform.git
-cd /{version}/terraform/{service}
+cd /{version}/terraform/{environment}/{service}
 ```
 
 ## Table of Contents
@@ -137,6 +137,7 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 │   │   └── modules
 │   │       ├── service
 │   │       └── service
+
 ```
 <br>
 
