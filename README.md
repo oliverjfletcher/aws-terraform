@@ -137,6 +137,7 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 │   │   └── modules
 │   │       ├── service
 │   │       └── service
+
 ```
 <br>
 
