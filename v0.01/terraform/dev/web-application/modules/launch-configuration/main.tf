@@ -5,13 +5,13 @@
 # Define Launch Configuration
 ######################################################################
 resource "aws_launch_configuration" "launch_configuration" {
-  name     = var.launch_configuration_name
-  image_id = var.launch_configuration_image_id
-  instance_type = var.launch_configuration_instance_type
-  key_name      = var.launch_configuration_key_name
-  security_groups = [var.security_group_ec2_id]
-  user_data = local.launch_configuration_user_data
-  enable_monitoring  = var.launch_configuration_monitoring
+  name              = var.launch_configuration_name
+  image_id          = var.launch_configuration_image_id
+  instance_type     = var.launch_configuration_instance_type
+  key_name          = var.launch_configuration_key_name
+  security_groups   = [var.security_group_ec2_id]
+  user_data         = local.launch_configuration_user_data
+  enable_monitoring = var.launch_configuration_monitoring
 }
 
 locals {

@@ -8,14 +8,14 @@ resource "aws_s3_bucket" "cloudtrail" {
   bucket = var.s3_bucket_name_003
   acl    = var.s3_bucket_acl
   versioning {
-    enabled    = var.s3_bucket_versioning
+    enabled = var.s3_bucket_versioning
   }
   tags = merge(
-      {
-        "name" = var.s3_bucket_name_003
-      },
-      var.standard_tags,
-      ) 
+    {
+      "name" = var.s3_bucket_name_003
+    },
+    var.standard_tags,
+  )
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {

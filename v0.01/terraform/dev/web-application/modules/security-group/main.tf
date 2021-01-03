@@ -20,22 +20,22 @@ resource "aws_security_group" "elb" {
   }
 
   egress {
-    from_port   = var.port_http
-    to_port     = var.port_http
-    protocol    = var.tcp_protocol
+    from_port = var.port_http
+    to_port   = var.port_http
+    protocol  = var.tcp_protocol
     cidr_blocks = [
       var.subnet_prv_0_cidr,
       var.subnet_prv_1_cidr,
       var.subnet_prv_2_cidr,
-  ]
-}
+    ]
+  }
 
   tags = merge(
-      {
-        "name" = var.sg_name_000
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.sg_name_000
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_security_group" "ec2" {
@@ -56,27 +56,27 @@ resource "aws_security_group" "ec2" {
   }
 
   egress {
-    from_port   = var.port_http
-    to_port     = var.port_http
-    protocol    = var.tcp_protocol
+    from_port = var.port_http
+    to_port   = var.port_http
+    protocol  = var.tcp_protocol
     cidr_blocks = [
-    var.internet_cidr
-  ]
-}
+      var.internet_cidr
+    ]
+  }
 
-    tags = merge(
-      {
-        "name" = var.sg_name_001
-      },
-      var.standard_tags,
-      )
+  tags = merge(
+    {
+      "name" = var.sg_name_001
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_security_group_rule" "ec2-https-egress" {
-  type        = var.sg_egress
-  from_port   = var.port_https
-  to_port     = var.port_https
-  protocol    = var.tcp_protocol
+  type      = var.sg_egress
+  from_port = var.port_https
+  to_port   = var.port_https
+  protocol  = var.tcp_protocol
   cidr_blocks = [
     var.internet_cidr
   ]

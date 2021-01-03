@@ -10,9 +10,9 @@ resource "aws_flow_log" "main" {
   traffic_type    = var.traffic_type
   vpc_id          = var.vpc_id
   tags = merge(
-      {
-        "name" = var.flow_logs_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.flow_logs_name
+    },
+    var.standard_tags,
+  )
 }

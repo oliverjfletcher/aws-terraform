@@ -7,7 +7,7 @@
 
 variable "standard_tags" {
   description = "Standards tags to be used for all AWS Resources"
-  type        = map
+  type        = map(any)
 }
 
 variable "s3_bucket_name_001" {

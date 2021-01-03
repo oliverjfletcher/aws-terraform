@@ -6,7 +6,7 @@
 ########################################################################
 variable "standard_tags" {
   description = "Standards tags to be used for all AWS Resources"
-  type        = map
+  type        = map(any)
 }
 
 variable "flow_logs_name" {

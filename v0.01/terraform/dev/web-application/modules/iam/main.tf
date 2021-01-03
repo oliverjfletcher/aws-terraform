@@ -5,7 +5,7 @@
 # Define IAM Role for VPC Flow Logs
 ######################################################################
 resource "aws_iam_role" "flow_logs_cloudwatch_role" {
-  name = var.iam_flow_logs_assume_role
+  name               = var.iam_flow_logs_assume_role
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -26,7 +26,7 @@ POLICY
 # Define IAM Policy for VPC Flow Logs to CloudWatch
 ######################################################################
 resource "aws_iam_policy" "flow_logs_cloudwatch_policy" {
-  name = var.iam_flow_logs_policy
+  name   = var.iam_flow_logs_policy
   policy = <<POLICY
 {
 	"Version": "2012-10-17",
@@ -51,8 +51,8 @@ resource "aws_iam_role_policy_attachment" "flow_logs_assume" {
   role       = aws_iam_role.flow_logs_cloudwatch_role.id
   policy_arn = aws_iam_policy.flow_logs_cloudwatch_policy.arn
   depends_on = [
-      aws_iam_role.flow_logs_cloudwatch_role,
-      aws_iam_policy.flow_logs_cloudwatch_policy
+    aws_iam_role.flow_logs_cloudwatch_role,
+    aws_iam_policy.flow_logs_cloudwatch_policy
   ]
 }
 
