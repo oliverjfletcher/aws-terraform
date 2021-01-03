@@ -21,13 +21,13 @@ resource "aws_cloudtrail" "master_cloudtrail" {
       type   = var.data_resource_type
       values = [var.data_resource_values]
     }
-  }               
+  }
   tags = merge(
-      {
-        "name" = var.cloudtrail_name
-      },
-      var.standard_tags,
-      )  
+    {
+      "name" = var.cloudtrail_name
+    },
+    var.standard_tags,
+  )
   depends_on = [
     var.s3_cloudtrail_id,
     var.s3_cloudtrail_bucket_policy_id,

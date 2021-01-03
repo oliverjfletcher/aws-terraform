@@ -9,11 +9,11 @@ resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = var.kms_key_id
   tags = merge(
-      {
-        "name" = var.cloudwatch_log_group_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.cloudwatch_log_group_name
+    },
+    var.standard_tags,
+  )
   depends_on = [
     var.kms_key_id
   ]

@@ -10,11 +10,11 @@ resource "aws_subnet" "public_0" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.subnet_pub_0_cidr
   tags = merge(
-      {
-        "name" = var.subnet_pub_0_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.subnet_pub_0_name
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_subnet" "public_1" {
@@ -23,11 +23,11 @@ resource "aws_subnet" "public_1" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.subnet_pub_1_cidr
   tags = merge(
-      {
-        "name" = var.subnet_pub_1_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.subnet_pub_1_name
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_subnet" "public_2" {
@@ -36,11 +36,11 @@ resource "aws_subnet" "public_2" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.subnet_pub_2_cidr
   tags = merge(
-      {
-        "name" = var.subnet_pub_2_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.subnet_pub_2_name
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_subnet" "private_0" {
@@ -49,11 +49,11 @@ resource "aws_subnet" "private_0" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.subnet_prv_0_cidr
   tags = merge(
-      {
-        "name" = var.subnet_prv_0_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.subnet_prv_0_name
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_subnet" "private_1" {
@@ -62,11 +62,11 @@ resource "aws_subnet" "private_1" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.subnet_prv_1_cidr
   tags = merge(
-      {
-        "name" = var.subnet_prv_1_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.subnet_prv_1_name
+    },
+    var.standard_tags,
+  )
 }
 
 resource "aws_subnet" "private_2" {
@@ -75,9 +75,9 @@ resource "aws_subnet" "private_2" {
   vpc_id                  = var.vpc_id
   cidr_block              = var.subnet_prv_2_cidr
   tags = merge(
-      {
-        "name" = var.subnet_prv_1_name
-      },
-      var.standard_tags,
-      )
+    {
+      "name" = var.subnet_prv_1_name
+    },
+    var.standard_tags,
+  )
 }

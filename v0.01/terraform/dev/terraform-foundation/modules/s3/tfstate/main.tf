@@ -8,14 +8,14 @@ resource "aws_s3_bucket" "terraform_state_primary" {
   bucket = var.s3_bucket_name_001
   acl    = var.s3_bucket_acl
   versioning {
-    enabled    = var.s3_bucket_versioning
+    enabled = var.s3_bucket_versioning
   }
   tags = merge(
-      {
-        "name" = var.s3_bucket_name_001
-      },
-      var.standard_tags,
-      )  
+    {
+      "name" = var.s3_bucket_name_001
+    },
+    var.standard_tags,
+  )
 
   replication_configuration {
     role = var.iam_role_replication_arn
@@ -40,6 +40,6 @@ resource "aws_s3_bucket" "terraform_state_primary" {
     }
   }
   depends_on = [
-      var.iam_role_replication_arn
+    var.iam_role_replication_arn
   ]
 }

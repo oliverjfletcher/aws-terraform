@@ -16,7 +16,7 @@ variable "sts_duration" {
 
 variable "standard_tags" {
   description = "Standards tags to be used for all AWS Resources"
-  type        = map
+  type        = map(any)
 }
 ########################################################################
 # Define variables to be used for VPC

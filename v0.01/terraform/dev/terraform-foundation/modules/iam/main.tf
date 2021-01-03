@@ -27,7 +27,7 @@ POLICY
 # Define IAM Policy for replicating Terraform Backend on S3
 ######################################################################
 resource "aws_iam_policy" "replication" {
-  name = var.iam_policy_name_001
+  name   = var.iam_policy_name_001
   policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -71,8 +71,8 @@ resource "aws_iam_role_policy_attachment" "replication" {
   role       = aws_iam_role.replication.name
   policy_arn = aws_iam_policy.replication.arn
   depends_on = [
-      aws_iam_role.replication,
-      aws_iam_policy.replication
+    aws_iam_role.replication,
+    aws_iam_policy.replication
   ]
 }
 

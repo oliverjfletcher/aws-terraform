@@ -2,6 +2,13 @@
  * AWS Terraform Demo
  */
 ######################################################################
+# Output Account ID which Terraform is authorized
+######################################################################
+data "aws_caller_identity" "current" {}
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+######################################################################
 # Define KMS for S3 Encryption for storing Terraform Backend
 ######################################################################
 resource "aws_kms_key" "s3_key_tf" {
@@ -18,7 +25,7 @@ resource "aws_kms_key" "s3_key_ct" {
   enable_key_rotation     = var.kms_enable_key_rotation
   tags                    = var.standard_tags
   description             = var.kms_description_ct
-  policy = <<POLICY
+  policy                  = <<POLICY
 {
     "Version": "2012-10-17",
     "Id": "Key policy created by CloudTrail",
@@ -27,7 +34,8 @@ resource "aws_kms_key" "s3_key_ct" {
             "Sid": "Enable IAM User Permissions",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::995351360350:root"
+                "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+                "AWS": "arn:aws:iam::995351360350:user/terraform"
             },
             "Action": "kms:*",
             "Resource": "*"

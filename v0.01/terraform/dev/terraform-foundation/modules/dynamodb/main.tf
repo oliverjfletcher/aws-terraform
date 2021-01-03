@@ -9,7 +9,7 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
   read_capacity  = var.dynamodb_table_read_capacity
   write_capacity = var.dynamodb_table_write_capacity
   hash_key       = var.dynamodb_table_hash_key
-  
+
   dynamic "attribute" {
     for_each = var.attribute
     content {
