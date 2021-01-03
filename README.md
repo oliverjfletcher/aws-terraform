@@ -147,14 +147,14 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 **Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. To enable this, Terraform Cloud has been configured with a Workspace to to manage the services to be defined for each of the Production and Development environments. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storing of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub secrets store.
 
-**Table 2.** *Terraform Cloud Workspace Variables*
+**Table 2.** *GitHub Secrets*
 
-|**Key**          |**Workspace**     |
-|-----------------|------------------|            
-|AWS_ACCESS_KEY_ID|aws-demo-dev      |
-|AWS_SECRET_ACCESS_KEY|aws-demo-dev      |
-|AWS_ACCESS_KEY_ID|aws-demo-prod     |
-|AWS_SECRET_ACCESS_KEY|aws-demo-prod     |
+|**Name**         |**Value** |
+|-----------------|----------|            
+|AWS_ACCESS_KEY_ID|NULL      |
+|AWS_SECRET_ACCESS_KEY|NULL  |
+|AWS_ACCESS_KEY_ID|NULL      |
+|AWS_SECRET_ACCESS_KEY|NULL  |
 
 <br>
 
