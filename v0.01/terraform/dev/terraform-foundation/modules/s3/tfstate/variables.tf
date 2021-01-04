@@ -61,7 +61,7 @@ variable "iam_role_replication_arn" {
   type        = string
 }
 
-variable "kms_key_arn" {
+variable "kms_key_arn_tf" {
   description = "KMS Key ARN for S3 Bucket"
   type        = string
 }

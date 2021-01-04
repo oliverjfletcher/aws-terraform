@@ -31,7 +31,7 @@ variable "s3_bucket_lifecycle" {
   type        = string
 }
 
-variable "kms_key_arn" {
+variable "kms_key_arn_ct" {
   description = "KMS Key ARN for S3 Bucket"
   type        = string
 }

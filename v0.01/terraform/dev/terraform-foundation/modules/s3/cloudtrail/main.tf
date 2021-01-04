@@ -19,18 +19,24 @@ resource "aws_s3_bucket" "cloudtrail" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        kms_master_key_id = var.kms_key_arn
+        kms_master_key_id = var.kms_key_arn_ct
         sse_algorithm     = var.sse_algorithm
       }
     }
   }
+  depends_on = [
+    var.kms_key_arn_ct
+  ]
 }
 
-#####################################################################
+######################################################################
 # Define S3 Bucket Policy for Cloudtrail
 ######################################################################
 resource "aws_s3_bucket_policy" "cloudtrail" {
   bucket = aws_s3_bucket.cloudtrail.id
+  depends_on = [
+    aws_s3_bucket.cloudtrail
+  ]
   policy = <<POLICY
 {
     "Version": "2012-10-17",
@@ -38,17 +44,39 @@ resource "aws_s3_bucket_policy" "cloudtrail" {
         {
             "Sid": "AWSCloudTrailAclCheck20150319",
             "Effect": "Allow",
-            "Principal": {"Service": "cloudtrail.amazonaws.com"},
+            "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+            },
             "Action": "s3:GetBucketAcl",
             "Resource": "arn:aws:s3:::useds3b002"
         },
         {
             "Sid": "AWSCloudTrailWrite20150319",
             "Effect": "Allow",
-            "Principal": {"Service": "cloudtrail.amazonaws.com"},
+            "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+            },
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::useds3b002/AWSLogs/097070510386/*",
-            "Condition": {"StringEquals": {"s3:x-amz-acl": "bucket-owner-full-control"}}
+            "Resource": "arn:aws:s3:::useds3b002/AWSLogs/995351360350/*",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
+        },
+        {
+            "Sid": "AWSCloudTrailWrite20150319",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::useds3b002/cloudtrail/AWSLogs/*",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
         }
     ]
 }

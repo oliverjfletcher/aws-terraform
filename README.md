@@ -4,9 +4,10 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 
 **Change Log**
 
-|**Version**                 |**Changes**              |
-|------------------------|----------------------------------------------------------------------------|
+|**Version**     |**Changes**             				    |
+|----------------|------------------------------------------|
 |v0.01           |Initial commit with baseline requirements |
+|v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs |
 
 
 **Service Provider Versions**
@@ -108,7 +109,7 @@ As Terraform will require access to the AWS Organization, a [IAM User](https://c
 
 Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. As shown below, each environment has been separated into it's own folder to enable independent management and state of each environment. Further to this each service that will be deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services.The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables. The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
 
-**Terraform Taxonomy:**
+**Terraform Taxonomy: File System Tree**
 ```
 .    
 ├── env
@@ -156,14 +157,15 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 <br>
 
-**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for each of the environments and services defined has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines each of the environment and services and the applicable bucket where the Terraform state is stored. The service account has also been provided, bucket read and write permissions, to manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
+**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for each the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
 
 **Table 2.** *Terraform State S3 Buckets*
 
-|**Bucket Name**          |**Service**    |**Environment**      |**URL**                                                       |
-|-------------------------|---------------|---------------------|--------------------------------------------------------------|
-|useds3b000               |Terraform Foundation |Development          |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)|
-|useds3b001               |Terraform Foundation |Development          |[useds3b001](https://s3.console.aws.amazon.com/s3/buckets/useds3b001)|
+|**Bucket Name**  |**Service**     |**Environment** |**URL**           |**Region**        |
+|-----------------|----------------|----------------|------------------|------------------|           
+|useds3b000       |Web Application |Dev             |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)| us-west-1 
+|useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/useds3b001)| us-west-2
+
 
 
 <br>

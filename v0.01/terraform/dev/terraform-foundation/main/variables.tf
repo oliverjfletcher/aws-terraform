@@ -144,7 +144,12 @@ variable "kms_enable_key_rotation" {
   type        = bool
 }
 
-variable "kms_description" {
+variable "kms_description_ct" {
+  description = "KMS key description"
+  type        = string
+}
+
+variable "kms_description_tf" {
   description = "KMS key description"
   type        = string
 }
@@ -180,4 +185,29 @@ variable "enable_logging" {
 variable "is_multi_region_trail" {
   description = "Enable Cloudtrail to run across multiple regions"
   type        = bool
+}
+
+variable "is_organization_trail" {
+  description = "Enable Cloudtrail for AWS Organisation"
+  type        = bool
+}
+
+variable "read_write_type" {
+  description = "Enable read and or write events to be logged in CloudTrail"
+  type        = string
+}
+
+variable "include_management_events" {
+  description = "Enable management events to be logged in CloudTrail"
+  type        = bool
+}
+
+variable "data_resource_type" {
+  description = "Enable data events to be logged in CloudTrail"
+  type        = string
+}
+
+variable "data_resource_values" {
+  description = "Data events type to be logged in Cloudtrail"
+  type        = string
 }
