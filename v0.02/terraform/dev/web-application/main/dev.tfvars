@@ -1,11 +1,16 @@
 /**
- * Rackspace DevOps Test
+ * AWS Terraform Demo - Variables
  */
 ##########################################################################################
 # Define values for variables to be used for Amazon Web Services Region and Credentials
 ##########################################################################################
-aws_region_001 = "us-west-2"
-sts_duration   = "300"
+aws_region_001         = "us-west-2"
+sts_duration           = "300"
+role_arn               = "arn:aws:iam::798376091767:role/terraform"
+backend_bucket         = "useds3b000"
+backend_key            = "global/s3/terraform.tfstate"
+backend_dynamodb_table = "terraform-state"
+backend_encryption     = "true"
 ##########################################################################################
 # Define values for tags for Amazon Web Services Resources
 ##########################################################################################

@@ -14,6 +14,31 @@ variable "sts_duration" {
   type        = string
 }
 
+variable "role_arn" {
+  description = "arn for AWS IAM service account for Terraform"
+  type        = string
+}
+
+variable "backend_bucket" {
+  description = "S3 bucket for Terraform backend"
+  type        = string
+}
+
+variable "backend_key" {
+  description = "DynamoDB key for Terraform backend"
+  type        = string
+}
+
+variable "backend_dynamodb_table" {
+  description = "DynamoDB table for Terraform backend"
+  type        = string
+}
+
+variable "backend_encryption" {
+  description = "Encryption for Terraform backend"
+  type        = bool
+}
+
 variable "standard_tags" {
   description = "Standards tags to be used for all AWS Resources"
   type        = map(any)

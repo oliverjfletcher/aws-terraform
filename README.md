@@ -7,15 +7,15 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 |**Version**     |**Changes**             				    |
 |----------------|------------------------------------------|
 |v0.01           |Initial commit with baseline requirements |
-|v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs |
+|v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs, and GitHub Action workflow testing |
 
 
 **Service Provider Versions**
 
 |**Service**                 |**Version**              |
 |------------------------|----------------------------------------------------------------------------|
-|**Terraform Foundation**           |[3.11.0](https://github.com/terraform-providers/terraform-provider-aws/releases/tag/v3.11.0)   |
-|**Web Application**           |[3.11.0](https://github.com/terraform-providers/terraform-provider-aws/releases/tag/v3.11.0)   |
+|**Terraform Foundation**           |[3.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.22.0)   |
+|**Web Application**           |[3.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.22.0)   |
 
 
 Detailed designs of each of the services can be found in their respective solution designs.
@@ -32,7 +32,7 @@ cd /{version}/terraform/{environment}/{service}
 1. [aws-services](#aws-services)
 1. [terraform-resources](#terraform-resources)
 1. [terraform-service-accounts](#terraform-service-accounts)
-1. [terraform-taxonmy](#terraform-taxonomy)
+1. [terraform-taxonomy](#terraform-taxonomy)
 1. [terraform-operations](#terraform-operations)
 
 ### aws-services
@@ -93,16 +93,16 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 ### terraform-service-account
 
-As Terraform will require access to the AWS Organization, a [IAM User](https://cloud.google.com/iam/docs/service-accounts) has been provisioned for each service to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Identity AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
+As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
 
 <br>
 
 **Table 1.** *Terraform Service Account*
 
-|**Service Account Name** |**Service**          |**Environment**        |
-|-------------------------|---------------------|-----------------------|
-|terraform                |Terraform Foundation |Development            |
-|terraform                |Web Application      |Development            |
+|**Service Account Name** |**Service**          |**Environment**        |**Account**            |
+|-------------------------|---------------------|-----------------------|-----------------------|
+|terraform                |Terraform Foundation |Development            |NULL                   |
+|terraform                |Web Application      |Development            |NULL                   |
 <br>
 
 ### terraform-taxonomy
@@ -158,7 +158,7 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 <br>
 
-**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for each the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
+**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
 
 **Table 2.** *Terraform State S3 Buckets*
 

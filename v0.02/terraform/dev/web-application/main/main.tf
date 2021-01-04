@@ -7,7 +7,7 @@
 provider "aws" {
   region = var.aws_region_001
   assume_role {
-    role_arn = "arn:aws:iam::798376091767:role/terraform"
+    role_arn = var.role_arn
   }
 }
 ######################################################################
@@ -20,16 +20,11 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "useds3b000"
-    key            = "global/s3/terraform.tfstate"
-    region         = "us-west-2"
-    dynamodb_table = "terraform-state"
-    encrypt        = true
-    #organization    = "oliver-dev"
-
-    #workspaces {
-    #name = "aws-demo-dev"
-    #}
+    bucket         = var.backend_bucket
+    key            = var.backend_key
+    region         = var.aws_region_001
+    dynamodb_table = var.backend_dynamodb_table
+    encrypt        = var.backend_encryption
   }
 }
 ######################################################################
