@@ -7,7 +7,7 @@
 provider "aws" {
   region = var.aws_region_001
   assume_role {
-    role_arn = "arn:aws:iam::798376091767:role/terraform"
+    role_arn = var.service_account_role
   }
 }
 ######################################################################
@@ -25,11 +25,6 @@ terraform {
     region         = "us-west-2"
     dynamodb_table = "terraform-state"
     encrypt        = true
-    #organization    = "oliver-dev"
-
-    #workspaces {
-    #name = "aws-demo-dev"
-    #}
   }
 }
 ######################################################################
