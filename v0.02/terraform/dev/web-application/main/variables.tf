@@ -14,6 +14,11 @@ variable "sts_duration" {
   type        = string
 }
 
+variable "role_arn" {
+  description = "arn for AWS IAM service account for Terraform"
+  type        = string
+}
+
 variable "standard_tags" {
   description = "Standards tags to be used for all AWS Resources"
   type        = map(any)
