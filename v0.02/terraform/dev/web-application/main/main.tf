@@ -7,7 +7,7 @@
 provider "aws" {
   region = var.aws_region_001
   assume_role {
-    role_arn = var.role_arn
+    role_arn = var.service_account_role
   }
 }
 ######################################################################
