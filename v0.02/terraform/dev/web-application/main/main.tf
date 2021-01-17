@@ -1,5 +1,5 @@
 /**
- * Onica DevOps Test
+ * AWS Terraform Demo - Main
  */
 ######################################################################
 # Define AWS Terraform Provider, Credentials, Project and Region
@@ -312,6 +312,3 @@ output "kms_key_arn" {
   value       = module.kms.kms_key_arn
   description = "ARN for KMS Key for CloudWatch Log Group"
 }
-
-
-
