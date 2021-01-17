@@ -5,25 +5,27 @@
 # Define AWS Terraform Provider, Credentials, Project and Region
 ######################################################################
 provider "aws" {
-  region            = var.aws_region_001
+  region = var.aws_region_001
+  assume_role {
+    role_arn = "arn:aws:iam::798376091767:role/terraform"
+  }
 }
 ######################################################################
 # Define Terraform
 ######################################################################
 terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
   backend "s3" {
-    #bucket         = "useds3b000"
-    #key            = "global/s3/terraform.tfstate"
-    #region         = "us-west-2"
-    #dynamodb_table = "terraform-state"
-    #encrypt        =  true
-    organization    = "oliver-dev"
+    bucket         = "useds3b000"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-state"
+    encrypt        = true
 
-  workspaces {
-    name = "aws-demo-dev"
-   }
- }
-}
 ######################################################################
 # Define AWS Resources
 ######################################################################
@@ -72,25 +74,25 @@ module "subnet" {
 }
 
 module "security_group" {
-  source               = "../modules/security-group"
-  standard_tags        = var.standard_tags
-  sg_name_000          = var.sg_name_000
-  sg_description_000   = var.sg_description_000
-  sg_name_001          = var.sg_name_001
-  sg_description_001   = var.sg_description_001
-  subnet_pub_0_cidr    = var.subnet_pub_0_cidr
-  subnet_pub_1_cidr    = var.subnet_pub_1_cidr
-  subnet_pub_2_cidr    = var.subnet_pub_2_cidr
-  subnet_prv_0_cidr    = var.subnet_prv_0_cidr
-  subnet_prv_1_cidr    = var.subnet_prv_1_cidr
-  subnet_prv_2_cidr    = var.subnet_prv_2_cidr
-  internet_cidr        = var.internet_cidr
-  port_http            = var.port_http
-  port_https           = var.port_https
-  tcp_protocol         = var.tcp_protocol
-  vpc_id               = module.vpc.vpc_id
-  sg_egress            = var.sg_egress
-  sg_ingress           = var.sg_ingress
+  source             = "../modules/security-group"
+  standard_tags      = var.standard_tags
+  sg_name_000        = var.sg_name_000
+  sg_description_000 = var.sg_description_000
+  sg_name_001        = var.sg_name_001
+  sg_description_001 = var.sg_description_001
+  subnet_pub_0_cidr  = var.subnet_pub_0_cidr
+  subnet_pub_1_cidr  = var.subnet_pub_1_cidr
+  subnet_pub_2_cidr  = var.subnet_pub_2_cidr
+  subnet_prv_0_cidr  = var.subnet_prv_0_cidr
+  subnet_prv_1_cidr  = var.subnet_prv_1_cidr
+  subnet_prv_2_cidr  = var.subnet_prv_2_cidr
+  internet_cidr      = var.internet_cidr
+  port_http          = var.port_http
+  port_https         = var.port_https
+  tcp_protocol       = var.tcp_protocol
+  vpc_id             = module.vpc.vpc_id
+  sg_egress          = var.sg_egress
+  sg_ingress         = var.sg_ingress
 
 }
 
@@ -117,13 +119,13 @@ module "internet_gateway" {
 }
 
 module "nat_gateway" {
-  source                = "../modules/nat-gateway"
-  nat_gw_name_000       = var.nat_gw_name_000
-  nat_gw_name_001       = var.nat_gw_name_001
-  subnet_pub_0_id       = module.subnet.subnet_public_0_id
-  subnet_pub_1_id       = module.subnet.subnet_public_1_id
-  standard_tags         = var.standard_tags
-  vpc_enabled           = var.vpc_enabled
+  source          = "../modules/nat-gateway"
+  nat_gw_name_000 = var.nat_gw_name_000
+  nat_gw_name_001 = var.nat_gw_name_001
+  subnet_pub_0_id = module.subnet.subnet_public_0_id
+  subnet_pub_1_id = module.subnet.subnet_public_1_id
+  standard_tags   = var.standard_tags
+  vpc_enabled     = var.vpc_enabled
 }
 
 module "elb" {
@@ -140,7 +142,7 @@ module "elb" {
   elb_target_group_name      = var.elb_target_group_name
   http_protocol              = var.http_protocol
   port_http                  = var.port_http
-  health_check_enabled       = var.health_check_enabled 
+  health_check_enabled       = var.health_check_enabled
   health_check_interval      = var.health_check_interval
   health_check_path          = var.health_check_path
   health_check_port          = var.health_check_port
@@ -158,7 +160,7 @@ module "auto_scaling" {
   auto_scaling_group_health_check_type    = var.auto_scaling_group_health_check_type
   auto_scaling_group_force_delete         = var.auto_scaling_group_force_delete
   auto_scaling_group_termination_policies = var.auto_scaling_group_termination_policies
-  auto_scaling_policy_name                = var.auto_scaling_policy_name 
+  auto_scaling_policy_name                = var.auto_scaling_policy_name
   auto_scaling_adjustment                 = var.auto_scaling_adjustment
   auto_scaling_adjustment_type            = var.auto_scaling_adjustment_type
   elb_target_group_arn                    = module.elb.elb_target_group_arn
@@ -171,12 +173,12 @@ module "auto_scaling" {
 }
 
 module "launch_configuration" {
-  source                            = "../modules/launch-configuration"
+  source                                 = "../modules/launch-configuration"
   launch_configuration_name              = var.launch_configuration_name
   launch_configuration_image_id          = var.launch_configuration_image_id
   launch_configuration_instance_type     = var.launch_configuration_instance_type
   launch_configuration_key_name          = var.launch_configuration_key_name
-  security_group_ec2_id             = module.security_group.security_group_ec2_id
+  security_group_ec2_id                  = module.security_group.security_group_ec2_id
   launch_configuration_monitoring        = var.launch_configuration_monitoring
   launch_configuration_public_ip_address = var.launch_configuration_public_ip_address
 }
@@ -193,8 +195,8 @@ module "cloudwatch" {
   cloudwatch_alarm_name          = var.cloudwatch_alarm_name
   cloudwatch_alarm_comparison    = var.cloudwatch_alarm_comparison
   cloudwatch_evaluation_periods  = var.cloudwatch_evaluation_periods
-  cloudwatch_metric_name         = var.cloudwatch_metric_name 
-  cloudwatch_namespace           = var.cloudwatch_namespace 
+  cloudwatch_metric_name         = var.cloudwatch_metric_name
+  cloudwatch_namespace           = var.cloudwatch_namespace
   cloudwatch_alarm_period        = var.cloudwatch_alarm_period
   cloudwatch_alarm_statistic     = var.cloudwatch_alarm_statistic
   cloudwatch_alarm_threshold     = var.cloudwatch_alarm_threshold
@@ -220,46 +222,46 @@ module "kms" {
 # Define Outputs from Modules to be used
 ######################################################################
 output "vpc_id" {
-  value = module.vpc.vpc_id
+  value       = module.vpc.vpc_id
   description = "VPC ID"
 }
 
 output "subnet_public_0_id" {
-  value = module.subnet.subnet_public_0_id
+  value       = module.subnet.subnet_public_0_id
   description = "Subnet ID"
 }
 
 output "subnet_public_1_id" {
-  value = module.subnet.subnet_public_1_id
+  value       = module.subnet.subnet_public_1_id
   description = "Subnet ID"
 }
 
 output "subnet_public_2_id" {
-  value = module.subnet.subnet_public_2_id
+  value       = module.subnet.subnet_public_2_id
   description = "Subnet ID"
 }
 
 output "subnet_private_0_id" {
-  value = module.subnet.subnet_private_0_id
+  value       = module.subnet.subnet_private_0_id
   description = "Subnet ID"
 }
 
 output "subnet_private_1_id" {
-  value = module.subnet.subnet_private_1_id
+  value       = module.subnet.subnet_private_1_id
   description = "Subnet ID"
 }
 
 output "subnet_private_2_id" {
-  value = module.subnet.subnet_private_2_id
+  value       = module.subnet.subnet_private_2_id
   description = "Subnet ID"
 }
 
 output "internet_gateway_id" {
-  value = module.internet_gateway.internet_gateway_id
+  value       = module.internet_gateway.internet_gateway_id
   description = "Subnet ID"
 }
 
-output "nat_gw_0_id"{
+output "nat_gw_0_id" {
   value = module.nat_gateway.nat_gw_0_id
 }
 
@@ -285,28 +287,28 @@ output "auto_scaling_policy_arn" {
 
 output "launch_configuration_name" {
   value = module.launch_configuration.launch_configuration_name
-}  
+}
 
 output "security_group_elb_id" {
   value = module.security_group.security_group_elb_id
-}  
+}
 
 output "security_group_ec2_id" {
   value = module.security_group.security_group_ec2_id
-}                                 
+}
 
 output "cloudwatch_log_group_arn" {
-  value = module.cloudwatch.cloudwatch_log_group_arn
+  value       = module.cloudwatch.cloudwatch_log_group_arn
   description = "ARN for CloudWatch Log Group for VPC Flow Logs"
 }
 
 output "flow_logs_cloudwatch_role" {
-  value = module.iam.flow_logs_cloudwatch_role
+  value       = module.iam.flow_logs_cloudwatch_role
   description = "ARN for IAM Role for VPC Flow Logs"
 }
 
 output "kms_key_arn" {
-  value = module.kms.kms_key_arn
+  value       = module.kms.kms_key_arn
   description = "ARN for KMS Key for CloudWatch Log Group"
 }
 

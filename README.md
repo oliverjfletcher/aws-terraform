@@ -7,15 +7,15 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 |**Version**     |**Changes**             				    |
 |----------------|------------------------------------------|
 |v0.01           |Initial commit with baseline requirements |
-|v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs |
+|v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs, and GitHub Action workflow testing |
 
 
 **Service Provider Versions**
 
 |**Service**                 |**Version**              |
 |------------------------|----------------------------------------------------------------------------|
-|**Terraform Foundation**           |[3.11.0](https://github.com/terraform-providers/terraform-provider-aws/releases/tag/v3.11.0)   |
-|**Web Application**           |[3.11.0](https://github.com/terraform-providers/terraform-provider-aws/releases/tag/v3.11.0)   |
+|**Terraform Foundation**           |[3.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.22.0)   |
+|**Web Application**           |[3.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.22.0)   |
 
 
 Detailed designs of each of the services can be found in their respective solution designs.
@@ -24,7 +24,7 @@ Detailed designs of each of the services can be found in their respective soluti
 
 ```
 git clone https://github.com/oliverjfletcher/aws-terraform.git
-cd /{version}/terraform/{service}
+cd /{version}/terraform/{environment}/{service}
 ```
 
 ## Table of Contents
@@ -32,7 +32,7 @@ cd /{version}/terraform/{service}
 1. [aws-services](#aws-services)
 1. [terraform-resources](#terraform-resources)
 1. [terraform-service-accounts](#terraform-service-accounts)
-1. [terraform-taxonmy](#terraform-taxonomy)
+1. [terraform-taxonomy](#terraform-taxonomy)
 1. [terraform-operations](#terraform-operations)
 
 ### aws-services
@@ -93,16 +93,16 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 ### terraform-service-account
 
-As Terraform will require access to the AWS Organization, a [IAM User](https://cloud.google.com/iam/docs/service-accounts) has been provisioned for each service to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Identity AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
+As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
 
 <br>
 
 **Table 1.** *Terraform Service Account*
 
-|**Service Account Name** |**Service**          |**Environment**        |
-|-------------------------|---------------------|-----------------------|
-|terraform                |Web Application      |Development            |
-
+|**Service Account Name** |**Service**          |**Environment**        |**Account**            |
+|-------------------------|---------------------|-----------------------|-----------------------|
+|terraform                |Terraform Foundation |Development            |NULL                   |
+|terraform                |Web Application      |Development            |NULL                   |
 <br>
 
 ### terraform-taxonomy
@@ -137,6 +137,7 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 │   │   └── modules
 │   │       ├── service
 │   │       └── service
+
 ```
 <br>
 
@@ -144,27 +145,27 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 **Terraform Variables:** [tfvars](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) files have been defined to make configuration changes to AWS resources effectively without having to changes to multiple variables throughout templates. Each tfvars file is defined within the main folder within the service folder. Global variables will also be defined within the variables.tf file in the main folder. The Global variables file is used to define variables that are standard values across the environment or service, and by definition should not require regular or any change at all, such as; project, location etc.
 
-**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. To enable this, Terraform Cloud has been configured with a Workspace to to manage the services to be defined for each of the Production and Development environments. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storing of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Terraform Cloud to interface with GitHub, a Token has been provisioned. This token has also been added into the GitHub secrets store.
+**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. To enable this, Terraform Cloud has been configured with a Workspace to to manage the services to be defined for each of the Production and Development environments. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storing of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub secrets store.
 
-**Table 2.** *Terraform Cloud Workspace Variables*
+**Table 2.** *GitHub Secrets*
 
-|**Key**          |**Value**    |**Sensitive**     |**Workspace**     |
-|-----------------|------------ |------------------|------------------|            
-|AWS_ACCESS_KEY_ID|TBD          |Yes               |aws-demo-dev      |
-|AWS_SECRET_ACCESS_KEY| TBD     |Yes               |aws-demo-dev      |
-|AWS_ACCESS_KEY_ID|TBD          |Yes               |aws-demo-prod     |
-|AWS_SECRET_ACCESS_KEY| TBD     |Yes               |aws-demo-prod     |
+|**Name**         |**Value** |
+|-----------------|----------|            
+|AWS_ACCESS_KEY_ID|NULL      |
+|AWS_SECRET_ACCESS_KEY|NULL  |
+|AWS_ACCESS_KEY_ID|NULL      |
+|AWS_SECRET_ACCESS_KEY|NULL  |
 
 <br>
 
-**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for each the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
+**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
 
 **Table 2.** *Terraform State S3 Buckets*
 
 |**Bucket Name**  |**Service**     |**Environment** |**URL**           |**Region**        |
 |-----------------|----------------|----------------|------------------|------------------|           
 |useds3b000       |Web Application |Dev             |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)| us-west-1 
-|useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/useds3b001)| us-west-2
+|useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/s3/buckets/useds3b001)| us-west-2
 
 
 

@@ -1,0 +1,12 @@
+v0.01/terraform/dev/terraform-foundation/main/terraform.tfstate
+v0.01/terraform/dev/terraform-foundation/main/terraform.tfstate.backup
+v0.01/terraform/dev/terraform-foundation/main/terraform.tfstate.backup
+v0.01/terraform/dev/terraform-foundation/main/.terraform*
+v0.01/terraform/dev/web-application/main/.terraform*
+v0.02/terraform/dev/terraform-foundation/main/terraform.tfstate
+v0.02/terraform/dev/terraform-foundation/main/terraform.tfstate.backup
+v0.02/terraform/dev/terraform-foundation/main/terraform.tfstate.backup
+.github/workflows/pr.yml
+.github/workflows/main.yml
+
+
