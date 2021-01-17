@@ -25,13 +25,7 @@ terraform {
     region         = "us-west-2"
     dynamodb_table = "terraform-state"
     encrypt        = true
-    #organization    = "oliver-dev"
 
-    #workspaces {
-    #name = "aws-demo-dev"
-    #}
-  }
-}
 ######################################################################
 # Define AWS Resources
 ######################################################################
