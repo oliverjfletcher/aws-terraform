@@ -14,10 +14,10 @@ provider "aws" {
 # Define Terraform
 ######################################################################
 terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
+  # required_providers {
+  #   aws = {
+  #     source = "hashicorp/aws"
+  #   }
   }
   backend "s3" {
     bucket         = "useds3b000"
