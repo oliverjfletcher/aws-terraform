@@ -1,0 +1,21 @@
+on:
+pull_request:
+  paths:
+  - '**.tf'
+  - '**.tfvars'
+jobs:
+  infracost:
+    runs-on: ubuntu-latest
+    name: Show infracost diff
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Run infracost diff
+      uses: infracost/infracost-gh-action@master
+      env:
+        INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        entrypoint: /scripts/ci/diff.sh # Do not change
+        path: "./v0.02/terraform/dev/web-application/main/"
+        usage_file: "./v0.02/terraform/dev/infracost/infracost-usage.yml"
