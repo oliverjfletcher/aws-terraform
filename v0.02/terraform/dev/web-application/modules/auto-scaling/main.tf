@@ -4,7 +4,7 @@
 ######################################################################
 # Define Auto Scaling Group
 ######################################################################
-resource "aws_autoscaling_group" "auto_scaling_group" {
+resource "aws_autoscaling_group" "auto_scaling_group_0" {
   name                      = var.auto_scaling_group_name
   max_size                  = var.auto_scaling_group_max_size
   min_size                  = var.auto_scaling_group_min_size
@@ -21,9 +21,9 @@ resource "aws_autoscaling_group" "auto_scaling_group" {
 # Define Auto Scaling Group Policy
 ######################################################################
 
-resource "aws_autoscaling_policy" "auto_scaling_policy" {
+resource "aws_autoscaling_policy" "auto_scaling_policy_0" {
   name                   = var.auto_scaling_policy_name
   scaling_adjustment     = var.auto_scaling_adjustment
   adjustment_type        = var.auto_scaling_adjustment_type
-  autoscaling_group_name = aws_autoscaling_group.auto_scaling_group.name
+  autoscaling_group_name = aws_autoscaling_group.auto_scaling_group_0.name
 }

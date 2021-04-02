@@ -191,8 +191,8 @@ module "cloudwatch" {
   cloudwatch_log_group_name      = var.cloudwatch_log_group_name
   cloudwatch_log_group_retention = var.cloudwatch_log_group_retention
   kms_key_id                     = module.kms.kms_key_arn
-  auto_scaling_group_name        = module.auto_scaling.auto_scaling_group_name
-  auto_scaling_policy_arn        = module.auto_scaling.auto_scaling_policy_arn
+  auto_scaling_group_name        = module.auto_scaling.auto_scaling_group_name_0
+  auto_scaling_policy_arn        = module.auto_scaling.auto_scaling_policy_arn_0
   cloudwatch_alarm_name          = var.cloudwatch_alarm_name
   cloudwatch_alarm_comparison    = var.cloudwatch_alarm_comparison
   cloudwatch_evaluation_periods  = var.cloudwatch_evaluation_periods
@@ -278,12 +278,12 @@ output "elb_target_group_id" {
   value = module.elb.elb_target_group_id
 }
 
-output "auto_scaling_group_name" {
-  value = module.auto_scaling.auto_scaling_group_name
+output "auto_scaling_group_name_0" {
+  value = module.auto_scaling.auto_scaling_group_name_0
 }
 
-output "auto_scaling_policy_arn" {
-  value = module.auto_scaling.auto_scaling_policy_arn
+output "auto_scaling_policy_arn_0" {
+  value = module.auto_scaling.auto_scaling_policy_arn_0
 }
 
 output "launch_configuration_name" {
