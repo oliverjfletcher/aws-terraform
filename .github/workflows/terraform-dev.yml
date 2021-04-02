@@ -1,4 +1,4 @@
-name: "web-app-pipeline-dev"
+name: "Web-App-Pipeline-Dev"
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  terraform:
-    name: "Terraform - Dev"
+  Terraform:
+    name: "Terraform"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
