@@ -168,7 +168,4 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 |useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/s3/buckets/useds3b001)| us-west-2
 
 
-
-
-
 <br>

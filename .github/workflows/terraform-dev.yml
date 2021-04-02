@@ -1,4 +1,4 @@
-name: "Web Application - Dev"
+name: "web-app-pipeline-dev"
 
 on:
   push:
