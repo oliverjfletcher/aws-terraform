@@ -103,6 +103,7 @@ As Terraform will require access to the AWS Organization, a [IAM User](https://d
 |-------------------------|---------------------|-----------------------|-----------------------|
 |terraform                |Terraform Foundation |Development            |NULL                   |
 |terraform                |Web Application      |Development            |NULL                   |
+
 <br>
 
 ### terraform-taxonomy
