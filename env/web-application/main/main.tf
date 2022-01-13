@@ -1,5 +1,5 @@
 /**
- * Onica DevOps Test
+ * AWS Terraform Demo - Main
  */
 ######################################################################
 # Define AWS Terraform Provider, Credentials, Project and Region
@@ -7,7 +7,7 @@
 provider "aws" {
   region = var.aws_region_001
   assume_role {
-    role_arn = "arn:aws:iam::798376091767:role/terraform"
+    role_arn = var.service_account_role
   }
 }
 ######################################################################
@@ -25,7 +25,11 @@ terraform {
     region         = "us-west-2"
     dynamodb_table = "terraform-state"
     encrypt        = true
-
+    workspaces {
+      name = "dev"
+    }
+  }
+}
 ######################################################################
 # Define AWS Resources
 ######################################################################
@@ -311,6 +315,3 @@ output "kms_key_arn" {
   value       = module.kms.kms_key_arn
   description = "ARN for KMS Key for CloudWatch Log Group"
 }
-
-
-
