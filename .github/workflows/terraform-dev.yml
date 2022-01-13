@@ -30,8 +30,11 @@ jobs:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Terraform Workspace - Dev
+      - name: Terraform Workspace Create - Dev
         run: terraform workspace new dev
+
+      - name: Terraform Workspace Select - Dev
+        run: terraform workspace select dev
 
       - name: Terraform Plan - Dev
         id: plan
