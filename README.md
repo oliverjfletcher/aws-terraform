@@ -35,7 +35,7 @@ cd /{version}/terraform/{environment}/{service}
   - [Table of Contents](#table-of-contents)
     - [aws-services](#aws-services)
       - [Terraform Foundation](#terraform-foundation)
-        - [Web Application](#web-application)
+      - [Web Application](#web-application)
     - [terraform-resources](#terraform-resources)
       - [Terraform Foundation](#terraform-foundation-1)
       - [Web Application](#web-application-1)
@@ -56,7 +56,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html)
 
-##### Web Application
+#### Web Application
 
 - [Virtual Private Cloud](https://docs.aws.amazon.com/vpc/index.html)
 - [Virtual Private Cloud Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
@@ -100,7 +100,7 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 ### terraform-service-account
 
-As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account.
+As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
 
 **Table 1.** *Terraform Service Account*
 
@@ -155,8 +155,6 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 |**Name**         |
 |-----------------|
-|AWS_ACCESS_KEY_ID|
-|AWS_SECRET_ACCESS_KEY|
 |AWS_ACCESS_KEY_ID|
 |AWS_SECRET_ACCESS_KEY|
 
