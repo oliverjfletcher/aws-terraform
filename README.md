@@ -15,8 +15,8 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 
 |**Service**                 |**Version**              |
 |------------------------|----------------------------------------------------------------------------|
-|**Terraform Foundation**           |[3.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.22.0)   |
-|**Web Application**           |[3.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.22.0)   |
+|**Terraform Foundation**           |[3.72.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.72.0)   |
+|**Web Application**           |[3.72.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.72.0)   |
 
 
 Detailed designs of each of the services can be found in their respective solution designs.
@@ -33,20 +33,21 @@ cd /{version}/terraform/{environment}/{service}
 - [Infrastructure as Code](#infrastructure-as-code)
   - [Table of Contents](#table-of-contents)
     - [aws-services](#aws-services)
-        - [Terraform Foundation](#terraform-foundation)
-        - [Web Application](#web-application)
+      - [Terraform Foundation](#terraform-foundation)
+      - [Web Application](#web-application)
     - [terraform-resources](#terraform-resources)
-        - [Terraform Foundation](#terraform-foundation-1)
-        - [Web Application](#web-application-1)
+      - [Terraform Foundation](#terraform-foundation-1)
+      - [Web Application](#web-application-1)
     - [terraform-service-account](#terraform-service-account)
     - [terraform-taxonomy](#terraform-taxonomy)
+      - [Terraform Taxonomy: File System Tree](#terraform-taxonomy-file-system-tree)
     - [terraform-operations](#terraform-operations)
 
 ### aws-services
 
 Below outlines the Amazon Web Services services that were used to implement each of the required services for the AWS Terraform Demo.
 
-##### Terraform Foundation
+#### Terraform Foundation
 
 - [CloudTrail](https://docs.aws.amazon.com/cloudtrail/index.html)
 - [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
@@ -54,7 +55,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html)
 
-##### Web Application
+#### Web Application
 
 - [Virtual Private Cloud](https://docs.aws.amazon.com/vpc/index.html)
 - [Virtual Private Cloud Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
@@ -69,13 +70,11 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
 
-<br>
-
 ### terraform-resources
 
 Below outlines the Terraform resources that were used to implement each of the required services for the AWS Demo.
 
-##### Terraform Foundation
+#### Terraform Foundation
 
 - [CloudTrail](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail)
 - [DynamoDB](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table)
@@ -83,7 +82,7 @@ Below outlines the Terraform resources that were used to implement each of the r
 - [Key Management Service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key)
 - [S3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket)
 
-##### Web Application
+#### Web Application
 
 - [Virtual Private Cloud](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
 - [Virtual Private Cloud Subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet)
@@ -102,22 +101,20 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
 
-<br>
-
 **Table 1.** *Terraform Service Account*
 
 |**Service Account Name** |**Service**          |**Environment**        |**Account**            |
 |-------------------------|---------------------|-----------------------|-----------------------|
 |terraform                |Terraform Foundation |Development            |NULL                   |
 |terraform                |Web Application      |Development            |NULL                   |
-<br>
 
 ### terraform-taxonomy
 
 Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. As shown below, each environment has been separated into it's own folder to enable independent management and state of each environment. Further to this each service that will be deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services.The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables. The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
 
-**Terraform Taxonomy: File System Tree**
-```
+#### Terraform Taxonomy: File System Tree
+
+```bash
 .    
 ├── env
 │   ├── service
@@ -146,7 +143,6 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 │   │       └── service
 
 ```
-<br>
 
 ### terraform-operations
 
@@ -156,24 +152,16 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 **Table 2.** *GitHub Secrets*
 
-|**Name**         |**Value** |
-|-----------------|----------|            
-|AWS_ACCESS_KEY_ID|NULL      |
-|AWS_SECRET_ACCESS_KEY|NULL  |
-|AWS_ACCESS_KEY_ID|NULL      |
-|AWS_SECRET_ACCESS_KEY|NULL  |
-
-<br>
+|**Name**         |
+|-----------------|
+|AWS_ACCESS_KEY_ID|
+|AWS_SECRET_ACCESS_KEY|
 
 **Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
 
 **Table 2.** *Terraform State S3 Buckets*
 
 |**Bucket Name**  |**Service**     |**Environment** |**URL**           |**Region**        |
-|-----------------|----------------|----------------|------------------|------------------|           
-|useds3b000       |Web Application |Dev             |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)| us-west-1 
+|-----------------|----------------|----------------|------------------|------------------|
+|useds3b000       |Web Application |Dev             |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)| us-west-1
 |useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/s3/buckets/useds3b001)| us-west-2
-
-
-
-<br>
