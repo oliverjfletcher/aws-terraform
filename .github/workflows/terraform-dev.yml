@@ -33,9 +33,6 @@ jobs:
       - name: Terraform Workspace Create - Dev
         run: terraform workspace new dev
 
-      - name: Terraform Workspace Select - Dev
-        run: terraform workspace select dev
-
       - name: Terraform Plan - Dev
         id: plan
         if: github.event_name == 'pull_request'
@@ -74,7 +71,7 @@ jobs:
 
       - name: Terraform Apply - Dev
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform destroy -var-file="dev.tfvars" -auto-approve
+        run: terraform apply -var-file="dev.tfvars" -auto-approve
         working-directory: "./env/web-application/main/"
         env:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
