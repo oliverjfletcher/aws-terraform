@@ -1,36 +1,37 @@
-# Infrastructure as Code
+# AWS Terraform Demo
 
-Collection of Terraform templates defined with the [AWS Terraform provider](https://github.com/terraform-providers/terraform-provider-aws), below outlines the versions used for each service. Templates define the required Amazon Web Services services to deploy the **Development** and **Production** environment for the below services. 
+Collection of Terraform templates defined with the [AWS Terraform provider](https://github.com/terraform-providers/terraform-provider-aws), below outlines the versions used for each service. Templates define the required Amazon Web Services services to deploy the **Development** environment for the below services.
 
-**Change Log**
+## Change Log
 
-|**Version**     |**Changes**             				    |
+|**Version**     |**Changes**                               |
 |----------------|------------------------------------------|
 |v0.01           |Initial commit with baseline requirements |
 |v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs, and GitHub Action workflow testing |
 |v0.03           |Clean up directory structure and add Terraform workspace |
 
-
-**Service Provider Versions**
+## Service Provider Versions
 
 |**Service**                 |**Version**              |
 |------------------------|----------------------------------------------------------------------------|
 |**Terraform Foundation**           |[3.72.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.72.0)   |
 |**Web Application**           |[3.72.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v3.72.0)   |
 
-
 Detailed designs of each of the services can be found in their respective solution designs.
 
-**Clone the repository:**
+### Clone the repository:
 
-```
+```bash
 git clone https://github.com/oliverjfletcher/aws-terraform.git
 cd /{version}/terraform/{environment}/{service}
 ```
 
 ## Table of Contents
 
-- [Infrastructure as Code](#infrastructure-as-code)
+- [AWS Terraform Demo](#aws-terraform-demo)
+  - [Change Log](#change-log)
+  - [Service Provider Versions](#service-provider-versions)
+    - [Clone the repository:](#clone-the-repository)
   - [Table of Contents](#table-of-contents)
     - [aws-services](#aws-services)
       - [Terraform Foundation](#terraform-foundation)
