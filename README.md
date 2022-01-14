@@ -8,6 +8,7 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 |----------------|------------------------------------------|
 |v0.01           |Initial commit with baseline requirements |
 |v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs, and GitHub Action workflow testing |
+|v0.03           |Clean up directory structure and add Terraform workspace |
 
 
 **Service Provider Versions**
@@ -29,11 +30,17 @@ cd /{version}/terraform/{environment}/{service}
 
 ## Table of Contents
 
-1. [aws-services](#aws-services)
-1. [terraform-resources](#terraform-resources)
-1. [terraform-service-accounts](#terraform-service-accounts)
-1. [terraform-taxonomy](#terraform-taxonomy)
-1. [terraform-operations](#terraform-operations)
+- [Infrastructure as Code](#infrastructure-as-code)
+  - [Table of Contents](#table-of-contents)
+    - [aws-services](#aws-services)
+        - [Terraform Foundation](#terraform-foundation)
+        - [Web Application](#web-application)
+    - [terraform-resources](#terraform-resources)
+        - [Terraform Foundation](#terraform-foundation-1)
+        - [Web Application](#web-application-1)
+    - [terraform-service-account](#terraform-service-account)
+    - [terraform-taxonomy](#terraform-taxonomy)
+    - [terraform-operations](#terraform-operations)
 
 ### aws-services
 
