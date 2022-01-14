@@ -1,5 +1,5 @@
 /**
- * AWS Terraform Demo - Variables
+ * AWS Terraform Demo - Variables - Dev
  */
 ##########################################################################################
 # Define values for variables to be used for Amazon Web Services Region and Credentials

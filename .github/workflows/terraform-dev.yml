@@ -14,28 +14,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup Terraform
+      - name: Setup Terraform - Dev
         uses: hashicorp/setup-terraform@v1
 
-      - name: Terraform Format
+      - name: Terraform Format - Dev
         id: fmt
         run: terraform fmt -check -recursive
-        working-directory: "./v0.02/terraform/dev/web-application/"
+        working-directory: "./env/web-application/"
 
-      - name: Terraform Init
+      - name: Terraform Init - Dev
         id: init
         run: terraform init
-        working-directory: "./v0.02/terraform/dev/web-application/main/"
+        working-directory: "./env/web-application/main/"
         env:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Terraform Plan
+      - name: Terraform Workspace Create - Dev
+        run: terraform workspace new dev
+
+      - name: Terraform Workspace Select - Dev
+        run: terraform workspace select dev
+
+      - name: Terraform Plan - Dev
         id: plan
         if: github.event_name == 'pull_request'
         run: terraform plan -var-file="dev.tfvars" -no-color
         continue-on-error: true
-        working-directory: "./v0.02/terraform/dev/web-application/main/"
+        working-directory: "./env/web-application/main/"
         env:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
@@ -62,14 +68,14 @@ jobs:
               body: output
             })
 
-      - name: Terraform Plan Status
+      - name: Terraform Plan Status - Dev
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
-      - name: Terraform Apply
+      - name: Terraform Apply - Dev
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform destroy -var-file="dev.tfvars" -auto-approve
-        working-directory: "./v0.02/terraform/dev/web-application/main/"
+        working-directory: "./env/web-application/main/"
         env:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
