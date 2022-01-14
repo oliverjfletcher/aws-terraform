@@ -1,4 +1,4 @@
-env/terraform-foundation/terraform.tfstate
+env/terraform-foundation/main/terraform.tfstate
 env/terraform-foundation/main/terraform.tfstate.backup
 env/terraform-foundation/main/.terraform/
 
