@@ -70,7 +70,7 @@ jobs:
         run: exit 1
     
       - name: Terraform Show - Dev
-        run: terraform show -var-file="dev.tfvars" -json tfplan.binary > plan.json
+        run: terraform show -json tfplan.binary > plan.json
         working-directory: "./env/web-application/main/"
 
       - name: Setup Infracost - Dev
