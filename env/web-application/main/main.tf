@@ -31,7 +31,7 @@ terraform {
 # Define AWS Resources
 ######################################################################
 module "vpc" {
-  source               = "https://github.com/oliverjfletcher/aws-terraform/tree/main/env/web-application/modules/vpc"
+  source               = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/vpc"
   vpc_name             = var.vpc_name
   standard_tags        = var.standard_tags
   vpc_cidr             = var.vpc_cidr
@@ -40,7 +40,7 @@ module "vpc" {
 }
 
 module "flow_log" {
-  source                    = "https://github.com/oliverjfletcher/aws-terraform/tree/main/env/web-application/modules/flow_log"
+  source                    = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/flow_log"
   standard_tags             = var.standard_tags
   flow_logs_name            = var.flow_logs_name
   traffic_type              = var.traffic_type
@@ -50,7 +50,7 @@ module "flow_log" {
 }
 
 module "subnet" {
-  source                  = "https://github.com/oliverjfletcher/aws-terraform/tree/main/env/web-application/modules/subnet"
+  source                  = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/subnet"
   standard_tags           = var.standard_tags
   map_public_ip_on_launch = var.map_public_ip_on_launch
   subnet_pub_0_name       = var.subnet_pub_0_name
@@ -75,7 +75,7 @@ module "subnet" {
 }
 
 module "security_group" {
-  source             = "https://github.com/oliverjfletcher/aws-terraform/tree/main/env/web-application/modules/security_group"
+  source             = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/security_group"
   standard_tags      = var.standard_tags
   sg_name_000        = var.sg_name_000
   sg_description_000 = var.sg_description_000
@@ -98,7 +98,7 @@ module "security_group" {
 }
 
 module "route_table" {
-  source              = "https://github.com/oliverjfletcher/aws-terraform/tree/main/env/web-application/modules/route_table"
+  source              = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/route_table"
   subnet_pub_0_id     = module.subnet.subnet_public_0_id
   subnet_pub_1_id     = module.subnet.subnet_public_1_id
   subnet_pub_2_id     = module.subnet.subnet_public_2_id
@@ -113,14 +113,14 @@ module "route_table" {
 }
 
 module "internet_gateway" {
-  source                = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/internet_gateway"
   internet_gateway_name = var.internet_gateway_name
   vpc_id                = module.vpc.vpc_id
   standard_tags         = var.standard_tags
 }
 
 module "nat_gateway" {
-  source          = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source          = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/"
   nat_gw_name_000 = var.nat_gw_name_000
   nat_gw_name_001 = var.nat_gw_name_001
   subnet_pub_0_id = module.subnet.subnet_public_0_id
