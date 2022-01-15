@@ -31,7 +31,7 @@ terraform {
 # Define AWS Resources
 ######################################################################
 module "vpc" {
-  source               = "github.com/oliverjfletcher/aws-terraform/tree/main/env/web-application/modules/vpc"
+  source               = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/vpc"
   vpc_name             = var.vpc_name
   standard_tags        = var.standard_tags
   vpc_cidr             = var.vpc_cidr
