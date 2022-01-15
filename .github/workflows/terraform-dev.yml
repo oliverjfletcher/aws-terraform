@@ -71,7 +71,6 @@ jobs:
     
       - name: Terraform Show - Dev
         run: terraform show -json tfplan.binary > plan.json
-        working-directory: "./env/web-application/main/"
 
       - name: Setup Infracost - Dev
         uses: infracost/actions/setup@v1
