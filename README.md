@@ -33,11 +33,11 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
     - [Clone the repository](#clone-the-repository)
   - [Table of Contents](#table-of-contents)
     - [aws-services](#aws-services)
-      - [Terraform Foundation](#terraform-foundation)
-      - [Web Application](#web-application)
+      - [Terraform Foundation (AWS Services)](#terraform-foundation-aws-services)
+      - [Web Application (AWS Services)](#web-application-aws-services)
     - [terraform-resources](#terraform-resources)
-      - [Terraform Foundation](#terraform-foundation-1)
-      - [Web Application](#web-application-1)
+      - [Terraform Foundation (Terraform Resources)](#terraform-foundation-terraform-resources)
+      - [Web Application (Terraform Resources)](#web-application-terraform-resources)
     - [terraform-service-account](#terraform-service-account)
     - [terraform-taxonomy](#terraform-taxonomy)
       - [Taxonomy](#taxonomy)
@@ -47,7 +47,7 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
 
 Below outlines the Amazon Web Services services that were used to implement each of the required services for the AWS Terraform Demo.
 
-#### Terraform Foundation
+#### Terraform Foundation (AWS Services)
 
 - [CloudTrail](https://docs.aws.amazon.com/cloudtrail/index.html)
 - [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
@@ -55,7 +55,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html)
 
-#### Web Application
+#### Web Application (AWS Services)
 
 - [Virtual Private Cloud](https://docs.aws.amazon.com/vpc/index.html)
 - [Virtual Private Cloud Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
@@ -74,7 +74,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 
 Below outlines the Terraform resources that were used to implement each of the required services for the AWS Demo.
 
-#### Terraform Foundation
+#### Terraform Foundation (Terraform Resources)
 
 - [CloudTrail](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail)
 - [DynamoDB](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table)
@@ -82,7 +82,7 @@ Below outlines the Terraform resources that were used to implement each of the r
 - [Key Management Service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key)
 - [S3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket)
 
-#### Web Application
+#### Web Application (Terraform Resources)
 
 - [Virtual Private Cloud](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
 - [Virtual Private Cloud Subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet)
@@ -110,7 +110,11 @@ As Terraform will require access to the AWS Organization, a [IAM User](https://d
 
 ### terraform-taxonomy
 
-Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. As shown below, each environment has been separated into it's own folder to enable independent management and state of each environment. Further to this each service that will be deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services.The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables. The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
+Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. Each environment for each service is separated into it's Terraform tfvars file to enable independent management and state of each environment. Each of the environments will also be deployed into it's own Terraform Workspace.
+
+Each service deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services. The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables.
+
+The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
 
 #### Taxonomy
 
