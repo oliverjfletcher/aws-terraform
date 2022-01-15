@@ -66,10 +66,8 @@ jobs:
         run: exit 1
     
       - name: Terraform Show - Dev
-        run: terraform show -json tfplan.binary > plan.json
+        run: terraform show -json "tfplan.binary" > "plan.json"
         working-directory: "./env/web-application/main/"
-        env:
-          TERRAFORM_CLI_PATH: "./env/web-application/main/"
 
       - name: Setup Infracost - Dev
         uses: infracost/actions/setup@v1
