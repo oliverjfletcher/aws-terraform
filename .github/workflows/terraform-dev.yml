@@ -10,8 +10,6 @@ jobs:
   terraform:
     name: "Terraform - Dev"
     runs-on: ubuntu-latest
-    env:
-      working-directory: "./env/web-application/main/"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -72,7 +70,7 @@ jobs:
     
       - name: Terraform Show - Dev
         run: terraform show -json tfplan.binary > plan.json
-        working-directory: ${{ env.working-directory }}
+        working-directory: "./env/web-application/main/"
 
       - name: Setup Infracost - Dev
         uses: infracost/actions/setup@v1
@@ -81,7 +79,7 @@ jobs:
 
       - name: Generate Infracost JSON - Dev
         run: infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
-        working-directory: ${{ env.working-directory }}
+        working-directory: "./env/web-application/main/"
 
       - name: Post Infracost comment - Dev
         uses: infracost/actions/comment@v1
