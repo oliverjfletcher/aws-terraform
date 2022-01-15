@@ -40,7 +40,7 @@ module "vpc" {
 }
 
 module "flow_log" {
-  source                    = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/flow_log"
+  source                    = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/flow_log"
   standard_tags             = var.standard_tags
   flow_logs_name            = var.flow_logs_name
   traffic_type              = var.traffic_type
@@ -50,7 +50,7 @@ module "flow_log" {
 }
 
 module "subnet" {
-  source                  = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/subnet"
+  source                  = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/subnet"
   standard_tags           = var.standard_tags
   map_public_ip_on_launch = var.map_public_ip_on_launch
   subnet_pub_0_name       = var.subnet_pub_0_name
@@ -75,7 +75,7 @@ module "subnet" {
 }
 
 module "security_group" {
-  source             = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/security_group"
+  source             = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/security_group"
   standard_tags      = var.standard_tags
   sg_name_000        = var.sg_name_000
   sg_description_000 = var.sg_description_000
@@ -98,7 +98,7 @@ module "security_group" {
 }
 
 module "route_table" {
-  source              = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/route_table"
+  source              = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/route_table"
   subnet_pub_0_id     = module.subnet.subnet_public_0_id
   subnet_pub_1_id     = module.subnet.subnet_public_1_id
   subnet_pub_2_id     = module.subnet.subnet_public_2_id
@@ -113,14 +113,14 @@ module "route_table" {
 }
 
 module "internet_gateway" {
-  source                = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/internet_gateway"
+  source                = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/internet_gateway"
   internet_gateway_name = var.internet_gateway_name
   vpc_id                = module.vpc.vpc_id
   standard_tags         = var.standard_tags
 }
 
 module "nat_gateway" {
-  source          = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules/"
+  source          = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/nat_gateway"
   nat_gw_name_000 = var.nat_gw_name_000
   nat_gw_name_001 = var.nat_gw_name_001
   subnet_pub_0_id = module.subnet.subnet_public_0_id
@@ -130,7 +130,7 @@ module "nat_gateway" {
 }
 
 module "elb" {
-  source                     = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                     = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/elb"
   standard_tags              = var.standard_tags
   elb_name                   = var.elb_name
   elb_type                   = var.elb_type
@@ -153,7 +153,7 @@ module "elb" {
 }
 
 module "auto_scaling" {
-  source                                  = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                                  = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/auto_scaling"
   auto_scaling_group_name                 = var.auto_scaling_group_name
   auto_scaling_group_max_size             = var.auto_scaling_group_max_size
   auto_scaling_group_min_size             = var.auto_scaling_group_min_size
@@ -174,7 +174,7 @@ module "auto_scaling" {
 }
 
 module "launch_configuration" {
-  source                                 = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                                 = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/launch_configuration"
   launch_configuration_name              = var.launch_configuration_name
   launch_configuration_image_id          = var.launch_configuration_image_id
   launch_configuration_instance_type     = var.launch_configuration_instance_type
@@ -186,7 +186,7 @@ module "launch_configuration" {
 
 
 module "cloudwatch" {
-  source                         = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                         = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/cloudwatch"
   standard_tags                  = var.standard_tags
   cloudwatch_log_group_name      = var.cloudwatch_log_group_name
   cloudwatch_log_group_retention = var.cloudwatch_log_group_retention
@@ -204,13 +204,13 @@ module "cloudwatch" {
 }
 
 module "iam" {
-  source                    = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                    = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/iam"
   iam_flow_logs_assume_role = var.iam_flow_logs_assume_role
   iam_flow_logs_policy      = var.iam_flow_logs_policy
 }
 
 module "kms" {
-  source                      = "github.com/oliverjfletcher/aws-terraform//env/modules/"
+  source                      = "github.com/oliverjfletcher/aws-terraform/env/web-application/modules/kms"
   aws_region_001              = var.aws_region_001
   kms_deletion_window_in_days = var.kms_deletion_window_in_days
   kms_enable_key_rotation     = var.kms_enable_key_rotation
