@@ -19,11 +19,10 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 
 Detailed designs of each of the services can be found in their respective solution designs.
 
-### Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/oliverjfletcher/aws-terraform.git
-cd /{version}/terraform/{environment}/{service}
 ```
 
 ## Table of Contents
@@ -31,7 +30,7 @@ cd /{version}/terraform/{environment}/{service}
 - [AWS Terraform Demo](#aws-terraform-demo)
   - [Change Log](#change-log)
   - [Service Provider Versions](#service-provider-versions)
-    - [Clone the repository:](#clone-the-repository)
+    - [Clone the repository](#clone-the-repository)
   - [Table of Contents](#table-of-contents)
     - [aws-services](#aws-services)
       - [Terraform Foundation](#terraform-foundation)
@@ -41,7 +40,7 @@ cd /{version}/terraform/{environment}/{service}
       - [Web Application](#web-application-1)
     - [terraform-service-account](#terraform-service-account)
     - [terraform-taxonomy](#terraform-taxonomy)
-      - [Terraform Taxonomy: File System Tree](#terraform-taxonomy-file-system-tree)
+      - [Taxonomy](#taxonomy)
     - [terraform-operations](#terraform-operations)
 
 ### aws-services
@@ -100,20 +99,20 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 ### terraform-service-account
 
-As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
+As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account.
 
 **Table 1.** *Terraform Service Account*
 
-|**Service Account Name** |**Service**          |**Environment**        |**Account**            |
-|-------------------------|---------------------|-----------------------|-----------------------|
-|terraform                |Terraform Foundation |Development            |NULL                   |
-|terraform                |Web Application      |Development            |NULL                   |
+|**Service Account Name** |**Service**          |**Environment**        |
+|-------------------------|---------------------|-----------------------|
+|terraform                |Terraform Foundation |Development            |
+|terraform                |Web Application      |Development            |
 
 ### terraform-taxonomy
 
 Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. As shown below, each environment has been separated into it's own folder to enable independent management and state of each environment. Further to this each service that will be deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services.The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables. The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
 
-#### Terraform Taxonomy: File System Tree
+#### Taxonomy
 
 ```bash
 .    
