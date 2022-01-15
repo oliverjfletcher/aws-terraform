@@ -35,13 +35,14 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
     - [aws-services](#aws-services)
       - [Terraform Foundation (AWS Services)](#terraform-foundation-aws-services)
       - [Web Application (AWS Services)](#web-application-aws-services)
-    - [terraform-resources](#terraform-resources)
+    - [Terraform-Resources](#terraform-resources)
       - [Terraform Foundation (Terraform Resources)](#terraform-foundation-terraform-resources)
       - [Web Application (Terraform Resources)](#web-application-terraform-resources)
-    - [terraform-service-account](#terraform-service-account)
-    - [terraform-taxonomy](#terraform-taxonomy)
+    - [Terraform-Service-Account](#terraform-service-account)
+    - [Terraform-Taxonomy](#terraform-taxonomy)
       - [Taxonomy](#taxonomy)
-    - [terraform-operations](#terraform-operations)
+    - [Terraform-Operations](#terraform-operations)
+    - [Infra-Cost](#infra-cost)
 
 ### aws-services
 
@@ -70,7 +71,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
 
-### terraform-resources
+### Terraform-Resources
 
 Below outlines the Terraform resources that were used to implement each of the required services for the AWS Demo.
 
@@ -97,7 +98,7 @@ Below outlines the Terraform resources that were used to implement each of the r
 - [IAM](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role)
 - [Key Management Service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key)
 
-### terraform-service-account
+### Terraform-Service-Account
 
 As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account.
 
@@ -108,7 +109,7 @@ As Terraform will require access to the AWS Organization, a [IAM User](https://d
 |terraform                |Terraform Foundation |Development            |
 |terraform                |Web Application      |Development            |
 
-### terraform-taxonomy
+### Terraform-Taxonomy
 
 Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. Each environment for each service is separated into it's Terraform tfvars file to enable independent management and state of each environment. Each of the environments will also be deployed into it's own Terraform Workspace.
 
@@ -148,11 +149,11 @@ The main folder will also house a files folder for the use of storing files for 
 
 ```
 
-### terraform-operations
+### Terraform-Operations
 
 **Terraform Variables:** [tfvars](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) files have been defined to make configuration changes to AWS resources effectively without having to changes to multiple variables throughout templates. Each tfvars file is defined within the main folder within the service folder. Global variables will also be defined within the variables.tf file in the main folder. The Global variables file is used to define variables that are standard values across the environment or service, and by definition should not require regular or any change at all, such as; project, location etc.
 
-**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storage of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub secrets store.
+**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storage of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub Actions secrets store.
 
 **Table 2.** *GitHub Secrets*
 
@@ -160,6 +161,7 @@ The main folder will also house a files folder for the use of storing files for 
 |-----------------|
 |AWS_ACCESS_KEY_ID|
 |AWS_SECRET_ACCESS_KEY|
+|INFRACOST_API_KEY|
 
 **Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
 
@@ -169,3 +171,9 @@ The main folder will also house a files folder for the use of storing files for 
 |-----------------|----------------|----------------|------------------|------------------|
 |useds3b000       |Web Application |Dev             |[useds3b000](https://s3.console.aws.amazon.com/s3/buckets/useds3b000)| us-west-1
 |useds3b001 |Web Application |Dev |[useds3b001](https://s3.console.aws.amazon.com/s3/buckets/useds3b001)| us-west-2
+
+### Infra-Cost
+
+The GitHub Actions workflow leverages the [Infra Cost](https://github.com/infracost/actions) GitHub action. This enables cost for the usage for the AWS resources provisioned to be estimated. The below screenshot details an example of the output that is created by Infra Cost. The API token key for Infra Cost is also stored in a GitHub Actions Secret.
+
+![Infra Cost Example](images/infra-cost-example.png)
