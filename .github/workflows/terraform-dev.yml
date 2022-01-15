@@ -10,6 +10,10 @@ jobs:
   terraform:
     name: "Terraform - Dev"
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
+      TERRAFORM_CLI_PATH: "./env/web-application/main/"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,24 +29,16 @@ jobs:
       - name: Terraform Init - Dev
         id: init
         run: terraform init
-        working-directory: "./env/web-application/main/"
-        env:
-          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+        working-directory: "./env/web-application/main/"      
       - name: Terraform Workspace Create - Dev
         run: terraform workspace new dev
 
       - name: Terraform Plan - Dev
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -var-file="dev.tfvars" -no-color
-        continue-on-error: true
+        run: terraform plan -var-file="dev.tfvars" -out "tfplan.binary" -no-color
         working-directory: "./env/web-application/main/"
-        env:
-          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
-
+        continue-on-error: true
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'
         env:
@@ -68,11 +64,26 @@ jobs:
       - name: Terraform Plan Status - Dev
         if: steps.plan.outcome == 'failure'
         run: exit 1
+    
+      - name: Terraform Show - Dev
+        run: terraform show -json tfplan.binary > plan.json
+        working-directory: "./env/web-application/main/"
+
+      - name: Setup Infracost - Dev
+        uses: infracost/actions/setup@v1
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Generate Infracost JSON - Dev
+        run: infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
+        working-directory: "./env/web-application/main/"
+
+      - name: Post Infracost comment - Dev
+        uses: infracost/actions/comment@v1
+        with:
+          path: /tmp/infracost.json
+          behavior: update 
 
       - name: Terraform Apply - Dev
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform destroy -var-file="dev.tfvars" -auto-approve
-        working-directory: "./env/web-application/main/"
-        env:
-          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
