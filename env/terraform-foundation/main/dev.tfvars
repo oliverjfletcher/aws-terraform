@@ -2,10 +2,6 @@
  * AWS Terraform Demo
  */
 ######################################################################################################
-# Define values for variables to be used for GitHub source
-######################################################################################################
- git_source = "git::https://github.com/oliverjfletcher/aws-terraform.git//env/web-application/modules"
-######################################################################################################
 # Define values for variables to be used for Amazon Web Services Region and Credentials
 ######################################################################################################
 aws_region_001 = "us-west-2"
