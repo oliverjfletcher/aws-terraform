@@ -32,7 +32,7 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
   - [Service Provider Versions](#service-provider-versions)
     - [Clone the repository](#clone-the-repository)
   - [Table of Contents](#table-of-contents)
-    - [aws-services](#aws-services)
+    - [AWS-Services](#aws-services)
       - [Terraform Foundation (AWS Services)](#terraform-foundation-aws-services)
       - [Web Application (AWS Services)](#web-application-aws-services)
     - [Terraform-Resources](#terraform-resources)
@@ -44,7 +44,7 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
     - [Terraform-Operations](#terraform-operations)
     - [Infra-Cost](#infra-cost)
 
-### aws-services
+### AWS-Services
 
 Below outlines the Amazon Web Services services that were used to implement each of the required services for the AWS Terraform Demo.
 
