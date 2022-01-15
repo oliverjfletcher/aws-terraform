@@ -2,13 +2,6 @@
  * AWS Terraform Demo
  */
 ########################################################################
-# Define values for variables to be used for GitHub source
-########################################################################
-variable "git_source" {
-  description = "Definition of GitHub source"
-  type        = string
-}
-########################################################################
 # Define variables to be used for AWS resources to be provisioned
 ########################################################################
 variable "aws_region_001" {
