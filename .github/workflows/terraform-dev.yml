@@ -36,9 +36,9 @@ jobs:
       - name: Terraform Plan - Dev
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -var-file="dev.tfvars" -out tfplan.binary -no-color
-        continue-on-error: true
+        run: terraform plan -var-file="dev.tfvars" -out "tfplan.binary" -no-color
         working-directory: "./env/web-application/main/"
+        continue-on-error: true
         env:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
@@ -71,6 +71,7 @@ jobs:
     
       - name: Terraform Show - Dev
         run: terraform show -json tfplan.binary > plan.json
+        working-directory: "./env/web-application/main/"
 
       - name: Setup Infracost - Dev
         uses: infracost/actions/setup@v1
