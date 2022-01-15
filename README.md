@@ -19,11 +19,10 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 
 Detailed designs of each of the services can be found in their respective solution designs.
 
-### Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/oliverjfletcher/aws-terraform.git
-cd /{version}/terraform/{environment}/{service}
 ```
 
 ## Table of Contents
@@ -31,24 +30,24 @@ cd /{version}/terraform/{environment}/{service}
 - [AWS Terraform Demo](#aws-terraform-demo)
   - [Change Log](#change-log)
   - [Service Provider Versions](#service-provider-versions)
-    - [Clone the repository:](#clone-the-repository)
+    - [Clone the repository](#clone-the-repository)
   - [Table of Contents](#table-of-contents)
     - [aws-services](#aws-services)
-      - [Terraform Foundation](#terraform-foundation)
-      - [Web Application](#web-application)
+      - [Terraform Foundation (AWS Services)](#terraform-foundation-aws-services)
+      - [Web Application (AWS Services)](#web-application-aws-services)
     - [terraform-resources](#terraform-resources)
-      - [Terraform Foundation](#terraform-foundation-1)
-      - [Web Application](#web-application-1)
+      - [Terraform Foundation (Terraform Resources)](#terraform-foundation-terraform-resources)
+      - [Web Application (Terraform Resources)](#web-application-terraform-resources)
     - [terraform-service-account](#terraform-service-account)
     - [terraform-taxonomy](#terraform-taxonomy)
-      - [Terraform Taxonomy: File System Tree](#terraform-taxonomy-file-system-tree)
+      - [Taxonomy](#taxonomy)
     - [terraform-operations](#terraform-operations)
 
 ### aws-services
 
 Below outlines the Amazon Web Services services that were used to implement each of the required services for the AWS Terraform Demo.
 
-#### Terraform Foundation
+#### Terraform Foundation (AWS Services)
 
 - [CloudTrail](https://docs.aws.amazon.com/cloudtrail/index.html)
 - [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
@@ -56,7 +55,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html)
 
-#### Web Application
+#### Web Application (AWS Services)
 
 - [Virtual Private Cloud](https://docs.aws.amazon.com/vpc/index.html)
 - [Virtual Private Cloud Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
@@ -75,7 +74,7 @@ Below outlines the Amazon Web Services services that were used to implement each
 
 Below outlines the Terraform resources that were used to implement each of the required services for the AWS Demo.
 
-#### Terraform Foundation
+#### Terraform Foundation (Terraform Resources)
 
 - [CloudTrail](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail)
 - [DynamoDB](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table)
@@ -83,7 +82,7 @@ Below outlines the Terraform resources that were used to implement each of the r
 - [Key Management Service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key)
 - [S3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket)
 
-#### Web Application
+#### Web Application (Terraform Resources)
 
 - [Virtual Private Cloud](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
 - [Virtual Private Cloud Subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet)
@@ -100,20 +99,24 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 ### terraform-service-account
 
-As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account. 
+As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account.
 
 **Table 1.** *Terraform Service Account*
 
-|**Service Account Name** |**Service**          |**Environment**        |**Account**            |
-|-------------------------|---------------------|-----------------------|-----------------------|
-|terraform                |Terraform Foundation |Development            |NULL                   |
-|terraform                |Web Application      |Development            |NULL                   |
+|**Service Account Name** |**Service**          |**Environment**        |
+|-------------------------|---------------------|-----------------------|
+|terraform                |Terraform Foundation |Development            |
+|terraform                |Web Application      |Development            |
 
 ### terraform-taxonomy
 
-Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. As shown below, each environment has been separated into it's own folder to enable independent management and state of each environment. Further to this each service that will be deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services.The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables. The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
+Below outlines the Terraform taxonomy and how environments, services and resources folders have been structured. Each environment for each service is separated into it's Terraform tfvars file to enable independent management and state of each environment. Each of the environments will also be deployed into it's own Terraform Workspace.
 
-#### Terraform Taxonomy: File System Tree
+Each service deployed will be segregated into it's own folder so that state and configuration can be managed separately. There are instances, where services will also be further segregated into sub-services. The main folder will house the main.tf, variables.tf and the tfvars file for resource and environment variables.
+
+The main folder will also house a files folder for the use of storing files for Lambda to be copied into each environment.
+
+#### Taxonomy
 
 ```bash
 .    
@@ -149,7 +152,7 @@ Below outlines the Terraform taxonomy and how environments, services and resourc
 
 **Terraform Variables:** [tfvars](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) files have been defined to make configuration changes to AWS resources effectively without having to changes to multiple variables throughout templates. Each tfvars file is defined within the main folder within the service folder. Global variables will also be defined within the variables.tf file in the main folder. The Global variables file is used to define variables that are standard values across the environment or service, and by definition should not require regular or any change at all, such as; project, location etc.
 
-**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. To enable this, Terraform Cloud has been configured with a Workspace to to manage the services to be defined for each of the Production and Development environments. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storing of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub secrets store.
+**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storage of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub secrets store.
 
 **Table 2.** *GitHub Secrets*
 
