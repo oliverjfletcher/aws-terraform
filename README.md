@@ -1,6 +1,6 @@
 # AWS Terraform Demo
 
-Collection of Terraform templates defined with the [AWS Terraform provider](https://github.com/terraform-providers/terraform-provider-aws), below outlines the versions used for each service. Templates define the required Amazon Web Services services to deploy the **Development** environment for the below services.
+ This repository demonstrates an automated deployment of AWS services by following a GitOps approach using Terraform and GitHub Actions. There are two distinct services defined. The Terraform Foundation service deploys the foundational AWS services. The services defined support the deployment of the Web Application service. This includes the required identity, storage for Terraform state and audit logging service.
 
 ## Change Log
 
@@ -55,8 +55,6 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
 
 ### AWS-Services
 
-Below outlines the Amazon Web Services services that were used to implement each of the required services for the AWS Terraform Demo.
-
 #### Terraform Foundation (AWS Services)
 
 - [CloudTrail](https://docs.aws.amazon.com/cloudtrail/index.html)
@@ -66,6 +64,8 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html)
 
 #### Web Application (AWS Services)
+
+
 
 - [Virtual Private Cloud](https://docs.aws.amazon.com/vpc/index.html)
 - [Virtual Private Cloud Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
@@ -81,8 +81,6 @@ Below outlines the Amazon Web Services services that were used to implement each
 - [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
 
 ### Terraform-Resources
-
-Below outlines the Terraform resources that were used to implement each of the required services for the AWS Demo.
 
 #### Terraform Foundation (Terraform Resources)
 
@@ -109,7 +107,7 @@ Below outlines the Terraform resources that were used to implement each of the r
 
 ### Terraform-Service-Account
 
-As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the Terraform resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account.
+As Terraform will require access to the AWS Organization, a [IAM User](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html) has been provisioned to act as a service account for the provisioning of the AWS resources. The service account will be created in the Terraform Foundation AWS account and will be assigned the sts:AssumeRole action to enable the service account to provision services in the Web Application AWS account.
 
 **Table 1.** *Terraform Service Account*
 
@@ -166,9 +164,10 @@ The main folder will also house a files folder for the use of storing files for 
 
 #### Terraform CI/CD
 
-[GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. The GitHub Actions workflow runs the below Terraform commands.
+[GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) is leveraged to enable GitOps for the services that have been defined using Terraform modules. The GitHub Actions workflow runs the below Terraform commands to automate the lifecycle of the AWS services defined in the Terraform modules.
 
 |**Command**      |**Description**                     |
+|-----------------|------------------------------------|
 |terraform fmt    |Run to lint the Terraform templates |
 |terraform init   |Run to initialize a working directory |
 |terraform plan   |Run to output which resources will be deployed when terraform apply is run, the output is added as a comment to the PR|
