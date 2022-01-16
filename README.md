@@ -10,6 +10,10 @@ Collection of Terraform templates defined with the [AWS Terraform provider](http
 |v0.02           |Update of KMS and S3 Bucket Policy to enable encryption of CloudTrail logs, and GitHub Action workflow testing |
 |v0.03           |Clean up directory structure and add Terraform workspace |
 
+## Build Status
+
+![AWS Terraform Demo](https://github.com/oliverjfletcher/aws-terraform/actions/workflows/terraform-dev.yml/badge.svg)
+
 ## Service Provider Versions
 
 |**Service**                 |**Version**              |
@@ -29,6 +33,7 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
 
 - [AWS Terraform Demo](#aws-terraform-demo)
   - [Change Log](#change-log)
+  - [Build Status](#build-status)
   - [Service Provider Versions](#service-provider-versions)
     - [Clone the repository](#clone-the-repository)
   - [Table of Contents](#table-of-contents)
