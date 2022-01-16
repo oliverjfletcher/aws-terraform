@@ -90,4 +90,6 @@ jobs:
 
       - name: Terraform Apply - Dev
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: "./env/web-application/main/"
         run: terraform destroy -var-file="dev.tfvars" -auto-approve
+
