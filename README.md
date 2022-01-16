@@ -42,6 +42,10 @@ git clone https://github.com/oliverjfletcher/aws-terraform.git
     - [Terraform-Taxonomy](#terraform-taxonomy)
       - [Taxonomy](#taxonomy)
     - [Terraform-Operations](#terraform-operations)
+      - [Terraform Variables](#terraform-variables)
+      - [Terraform CI/CD](#terraform-cicd)
+      - [Secrets Management](#secrets-management)
+      - [Terraform State](#terraform-state)
     - [Infra-Cost](#infra-cost)
 
 ### AWS-Services
@@ -151,9 +155,25 @@ The main folder will also house a files folder for the use of storing files for 
 
 ### Terraform-Operations
 
-**Terraform Variables:** [tfvars](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) files have been defined to make configuration changes to AWS resources effectively without having to changes to multiple variables throughout templates. Each tfvars file is defined within the main folder within the service folder. Global variables will also be defined within the variables.tf file in the main folder. The Global variables file is used to define variables that are standard values across the environment or service, and by definition should not require regular or any change at all, such as; project, location etc.
+#### Terraform Variables
 
-**Terraform CI/CD:** [GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. The below outlines the Environment Variables that have been added for each of the Workspaces, which enables secure storage of the required credentials for the Terraform Service Account (IAM User). Further to this, to enable Github Actions to interface with the AWS API, keys for AWS have been created. Both the key ID and access key secret has been added into the GitHub Actions secrets store.
+[tfvars](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) files have been defined to make configuration changes to AWS resources effectively without having to changes to multiple variables throughout templates. Each tfvars file is defined within the main folder within the service folder. Global variables will also be defined within the variables.tf file in the main folder. The Global variables file is used to define variables that are standard values across the environment or service, and by definition should not require regular or any change at all, such as; project, location etc.
+
+#### Terraform CI/CD
+
+[GitHub Actions](https://learn.hashicorp.com/tutorials/terraform/github-actions?in=terraform/automation) has been configured with the Terraform templates to enable GitOps for the services that have been defined for the Terraform templates. The GitHub Actions workflow runs the below Terraform commands.
+
+|**Command**      |**Description**                     |
+|terraform fmt    |Run to lint the Terraform templates |
+|terraform init   |Run to initialize a working directory |
+|terraform plan   |Run to output which resources will be deployed when terraform apply is run, the output is added as a comment to the PR|
+|terraform show   |Run  to output the resources to json to be consumed by the Infra Cost API|
+|terraform apply  |Run to deploy the resources, once the PR has been approved and merged|
+|terraform destroy |Run to destroy the resources, once the PR has been approved and merged|
+
+#### Secrets Management
+
+The below outlines the GitHub Actions secrets that have been defined. The AWS secrets enable GitHub Actions to run as the IAM service account to manage the AWS resources throughout their lifecycle. To enable GitHub Actions to interact with the Infra Cost API an API key is also stored in the GitHub Actions secrets store. All of the secrets are called in the GitHub Actions workflow using environment variables.
 
 **Table 2.** *GitHub Secrets*
 
@@ -163,7 +183,9 @@ The main folder will also house a files folder for the use of storing files for 
 |AWS_SECRET_ACCESS_KEY|
 |INFRACOST_API_KEY|
 
-**Terraform State:** Terraform [State](https://www.terraform.io/docs/state/index.html) for the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
+#### Terraform State
+
+Terraform [State](https://www.terraform.io/docs/state/index.html) for the web application solution has been configured to be stored within Amazon Web Service S3 buckets. The below table outlines the applicable bucket where the Terraform state is stored. The service account has also been provided s3 bucket read and write permission do it can manage the state file stored in the below buckets. The Terraform state has also been replicated between regions to ensure availability.
 
 **Table 2.** *Terraform State S3 Buckets*
 
@@ -174,6 +196,6 @@ The main folder will also house a files folder for the use of storing files for 
 
 ### Infra-Cost
 
-The GitHub Actions workflow leverages the [Infra Cost](https://github.com/infracost/actions) GitHub action. This enables cost for the usage for the AWS resources provisioned to be estimated. The below screenshot details an example of the output that is created by Infra Cost. The API token key for Infra Cost is also stored in a GitHub Actions Secret.
+The GitHub Actions workflow leverages the [Infra Cost](https://github.com/infracost/actions) GitHub action. This enables cost for the usage for the AWS resources provisioned to be estimated. The below screenshot details an example of the output that is created by Infra Cost.
 
 ![Infra Cost Example](images/infra-cost-example.png)
