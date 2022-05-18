@@ -31,7 +31,7 @@ terraform {
 # Define AWS Resources
 ######################################################################
 module "vpc" {
-  source               = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/vpc"
+  source               = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/vpc"
   vpc_name             = var.vpc_name
   standard_tags        = var.standard_tags
   vpc_cidr             = var.vpc_cidr
@@ -40,7 +40,7 @@ module "vpc" {
 }
 
 module "flow_log" {
-  source                    = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/flow-log"
+  source                    = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/flow-log"
   standard_tags             = var.standard_tags
   flow_logs_name            = var.flow_logs_name
   traffic_type              = var.traffic_type
@@ -50,7 +50,7 @@ module "flow_log" {
 }
 
 module "subnet" {
-  source                  = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/subnet"
+  source                  = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/subnet"
   standard_tags           = var.standard_tags
   map_public_ip_on_launch = var.map_public_ip_on_launch
   subnet_pub_0_name       = var.subnet_pub_0_name
@@ -75,7 +75,7 @@ module "subnet" {
 }
 
 module "security_group" {
-  source             = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/security-group"
+  source             = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/security-group"
   standard_tags      = var.standard_tags
   sg_name_000        = var.sg_name_000
   sg_description_000 = var.sg_description_000
@@ -98,7 +98,7 @@ module "security_group" {
 }
 
 module "route_table" {
-  source              = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/route-table"
+  source              = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/route-table"
   subnet_pub_0_id     = module.subnet.subnet_public_0_id
   subnet_pub_1_id     = module.subnet.subnet_public_1_id
   subnet_pub_2_id     = module.subnet.subnet_public_2_id
@@ -113,14 +113,14 @@ module "route_table" {
 }
 
 module "internet_gateway" {
-  source                = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/internet-gateway"
+  source                = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/internet-gateway"
   internet_gateway_name = var.internet_gateway_name
   vpc_id                = module.vpc.vpc_id
   standard_tags         = var.standard_tags
 }
 
 module "nat_gateway" {
-  source          = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/nat-gateway"
+  source          = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/nat-gateway"
   nat_gw_name_000 = var.nat_gw_name_000
   nat_gw_name_001 = var.nat_gw_name_001
   subnet_pub_0_id = module.subnet.subnet_public_0_id
@@ -130,7 +130,7 @@ module "nat_gateway" {
 }
 
 module "elb" {
-  source                     = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/elb"
+  source                     = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/elb"
   standard_tags              = var.standard_tags
   elb_name                   = var.elb_name
   elb_type                   = var.elb_type
@@ -153,7 +153,7 @@ module "elb" {
 }
 
 module "auto_scaling" {
-  source                                  = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/auto-scaling"
+  source                                  = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/auto-scaling"
   auto_scaling_group_name                 = var.auto_scaling_group_name
   auto_scaling_group_max_size             = var.auto_scaling_group_max_size
   auto_scaling_group_min_size             = var.auto_scaling_group_min_size
@@ -174,7 +174,7 @@ module "auto_scaling" {
 }
 
 module "launch_configuration" {
-  source                                 = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/launch-configuration"
+  source                                 = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/launch-configuration"
   launch_configuration_name              = var.launch_configuration_name
   launch_configuration_image_id          = var.launch_configuration_image_id
   launch_configuration_instance_type     = var.launch_configuration_instance_type
@@ -192,7 +192,7 @@ module "launch_configuration" {
 
 
 module "cloudwatch" {
-  source                         = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/cloudwatch"
+  source                         = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/cloudwatch"
   standard_tags                  = var.standard_tags
   cloudwatch_log_group_name      = var.cloudwatch_log_group_name
   cloudwatch_log_group_retention = var.cloudwatch_log_group_retention
@@ -210,13 +210,13 @@ module "cloudwatch" {
 }
 
 module "iam" {
-  source                    = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/iam"
+  source                    = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/iam"
   iam_flow_logs_assume_role = var.iam_flow_logs_assume_role
   iam_flow_logs_policy      = var.iam_flow_logs_policy
 }
 
 module "kms" {
-  source                      = "git@github.com:oliverjfletcher/aws-terraform-testing.git//env/web-application/modules/kms"
+  source                      = "git@github.com:oliverjfletcher/aws-terraform.git//env/web-application/modules/kms"
   aws_region_001              = var.aws_region_001
   kms_deletion_window_in_days = var.kms_deletion_window_in_days
   kms_enable_key_rotation     = var.kms_enable_key_rotation
