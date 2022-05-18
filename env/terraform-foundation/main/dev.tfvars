@@ -12,23 +12,26 @@ sts_duration   = "120"
 #######################################################################################################
 standard_tags = {
   department  = "engineering"
-  contact     = "oliverjamesfletcher@protonmail.com"
+  contact     = "helloworld@oliverfletcher.io"
   environment = "development"
 }
 #######################################################################################################
-# Define values for variables to be used for S3 Bucket for Terraform State
+# Define values for variables to be used for S3 Bucket for Terraform State and CloudTrail
 #######################################################################################################
 s3_bucket_name_001                  = "useds3b000"
 s3_bucket_name_002                  = "useds3b001"
 s3_bucket_name_003                  = "useds3b002"
 s3_bucket_acl                       = "private"
-s3_bucket_versioning                = "true"
+s3_bucket_versioning                = "Enabled"
 s3_bucket_lifecycle                 = "true"
 s3_mfa_delete                       = "true"
 s3_bucket_replication_rule_id       = "terraform"
 s3_bucket_replication_rule_prefix   = "dev"
 s3_bucket_replication_status        = "Enabled"
 s3_bucket_replication_storage_class = "STANDARD"
+block_public_policy                 = "true"
+ignore_public_acls                  = "true"
+restrict_public_buckets             = "true"
 #######################################################################################################
 # Define values for variables to be used for IAM for Terraform State S3 Replication
 #######################################################################################################

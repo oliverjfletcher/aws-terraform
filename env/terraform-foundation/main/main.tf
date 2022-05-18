@@ -35,6 +35,9 @@ module "s3_tfstate" {
   s3_bucket_tfstate_arn               = module.s3_tfstate_replication.s3_tf_state_replication_arn
   kms_key_arn_tf                      = module.kms.kms_key_arn_tf
   sse_algorithm                       = var.sse_algorithm
+  block_public_policy                 = var.block_public_policy
+  ignore_public_acls                  = var.ignore_public_acls
+  restrict_public_buckets             = var.restrict_public_buckets
 }
 
 module "s3_tfstate_replication" {
@@ -42,24 +45,30 @@ module "s3_tfstate_replication" {
   providers = {
     aws = aws.west2
   }
-  standard_tags        = var.standard_tags
-  s3_bucket_name_002   = var.s3_bucket_name_002
-  s3_bucket_acl        = var.s3_bucket_acl
-  s3_bucket_versioning = var.s3_bucket_versioning
-  s3_bucket_lifecycle  = var.s3_bucket_lifecycle
-  kms_key_arn_tf       = module.kms.kms_key_arn_tf
-  sse_algorithm        = var.sse_algorithm
+  standard_tags           = var.standard_tags
+  s3_bucket_name_002      = var.s3_bucket_name_002
+  s3_bucket_acl           = var.s3_bucket_acl
+  s3_bucket_versioning    = var.s3_bucket_versioning
+  s3_bucket_lifecycle     = var.s3_bucket_lifecycle
+  kms_key_arn_tf          = module.kms.kms_key_arn_tf
+  sse_algorithm           = var.sse_algorithm
+  block_public_policy     = var.block_public_policy
+  ignore_public_acls      = var.ignore_public_acls
+  restrict_public_buckets = var.restrict_public_buckets
 }
 
 module "s3_cloudtrail" {
-  source               = "../modules/s3/cloudtrail"
-  standard_tags        = var.standard_tags
-  s3_bucket_name_003   = var.s3_bucket_name_003
-  s3_bucket_acl        = var.s3_bucket_acl
-  s3_bucket_versioning = var.s3_bucket_versioning
-  s3_bucket_lifecycle  = var.s3_bucket_lifecycle
-  kms_key_arn_ct       = module.kms.kms_key_arn_ct
-  sse_algorithm        = var.sse_algorithm
+  source                  = "../modules/s3/cloudtrail"
+  standard_tags           = var.standard_tags
+  s3_bucket_name_003      = var.s3_bucket_name_003
+  s3_bucket_acl           = var.s3_bucket_acl
+  s3_bucket_versioning    = var.s3_bucket_versioning
+  s3_bucket_lifecycle     = var.s3_bucket_lifecycle
+  kms_key_arn_ct          = module.kms.kms_key_arn_ct
+  sse_algorithm           = var.sse_algorithm
+  block_public_policy     = var.block_public_policy
+  ignore_public_acls      = var.ignore_public_acls
+  restrict_public_buckets = var.restrict_public_buckets
 }
 
 module "dynamodb_table" {

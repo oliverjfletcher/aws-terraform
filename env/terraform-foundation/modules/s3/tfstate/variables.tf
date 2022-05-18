@@ -70,3 +70,18 @@ variable "sse_algorithm" {
   description = "SSE Server side encryption algorithm"
   type        = string
 }
+
+variable "block_public_policy" {
+  description = "Reject calls to PUT Bucket policy if the specified bucket policy allows public access"
+  type        = bool
+}
+
+variable "ignore_public_acls" {
+  description = "Ignore public ACLs for this bucket"
+  type        = bool
+}
+
+variable "restrict_public_buckets" {
+  description = "Restrict public bucket policies for this bucket"
+  type        = bool
+}

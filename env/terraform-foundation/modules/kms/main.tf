@@ -34,7 +34,6 @@ resource "aws_kms_key" "s3_key_ct" {
             "Sid": "Enable IAM User Permissions",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
                 "AWS": "arn:aws:iam::995351360350:user/terraform"
             },
             "Action": "kms:*",

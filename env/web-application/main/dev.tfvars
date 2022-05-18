@@ -12,7 +12,7 @@ service_account_role = "arn:aws:iam::798376091767:role/terraform"
 ##########################################################################################
 standard_tags = {
   department  = "engineering"
-  contact     = "oliverjamesfletcher@protonmail.com"
+  contact     = "helloworld@oliverfletcher.io"
   environment = "development"
 }
 ##########################################################################################
@@ -128,7 +128,7 @@ auto_scaling_policy_name                = "usedasg000"
 auto_scaling_adjustment                 = "1"
 auto_scaling_adjustment_type            = "ChangeInCapacity"
 ##########################################################################
-# Define values to be used for Auto Scaling to be provisioned
+# Define values to be used for Launch Configuration to be provisioned
 ##########################################################################
 launch_configuration_name              = "usedlcasg000"
 launch_configuration_image_id          = "ami-067f5c3d5a99edc80"
@@ -136,3 +136,9 @@ launch_configuration_instance_type     = "t2.micro"
 launch_configuration_key_name          = "0a6c45e4812a29026"
 launch_configuration_monitoring        = "true"
 launch_configuration_public_ip_address = "false"
+launch_configuration_encrypted         = "true"
+launch_configuration_iops              = "0"
+launch_configuration_throughput        = "0"
+launch_configuration_volume_size       = "8"
+launch_configuration_volume_type       = "standard"
+launch_configuration_http_tokens       = "required"

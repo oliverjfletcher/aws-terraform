@@ -1,5 +1,4 @@
+env/terraform-foundation/main/.terraform*
+env/terraform-foundation/main/.terraform.lock.hcl
 env/terraform-foundation/main/terraform.tfstate
 env/terraform-foundation/main/terraform.tfstate.backup
-env/terraform-foundation/main/.terraform/
-
-

@@ -39,4 +39,33 @@ variable "launch_configuration_public_ip_address" {
   type        = bool
 }
 
+variable "launch_configuration_encrypted" {
+  description = "Encyrption configuration for the root device"
+  type        = bool
+}
 
+variable "launch_configuration_iops" {
+  description = "IOPs for root device defined within the launch configuration"
+  type        = string
+}
+
+variable "launch_configuration_throughput" {
+  description = "Throughput  for root device defined within the launch configuration"
+  type        = string
+}
+
+variable "launch_configuration_volume_size" {
+  description = "Volume size for root device defined within the launch configuration"
+  type        = string
+}
+
+variable "launch_configuration_volume_type" {
+  description = "Volume type for root device defined within the launch configuration"
+  type        = string
+}
+
+
+variable "launch_configuration_http_tokens" {
+  description = "Session token for instance metadata service"
+  type        = string
+}
